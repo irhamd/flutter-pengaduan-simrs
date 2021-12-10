@@ -38,7 +38,12 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 Navigator.pushNamed(context, "/rest_post");
               },
-              child: Text("Rest Post"))
+              child: Text("Rest Post")),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/camera");
+              },
+              child: Text("Camera"))
         ])),
       ),
       floatingActionButton: FloatingActionButton(

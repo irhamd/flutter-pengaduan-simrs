@@ -28,17 +28,14 @@ class TestCameraState extends State<TestCamera> {
     });
   }
 
-  getGradien() {
-    return (Container(decoration: gradientColor()));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.orange,
-      appBar: AppBar(title: Text("Input Visite"), flexibleSpace: getGradien()),
+      appBar: AppBar(title: Text("Input Visite")),
       body: Container(
         width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         decoration: gradientColor(),
         child: Padding(
           padding: const EdgeInsets.all(10),
@@ -63,7 +60,7 @@ class TestCameraState extends State<TestCamera> {
                     onPressed: () {
                       getMasalah();
                     },
-                    child: Icon(Icons.search))
+                    child: Icon(Icons.search)),
               ],
             ),
           ),

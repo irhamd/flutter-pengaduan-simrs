@@ -6,7 +6,7 @@ OutlineInputBorder myinputborder() {
       //Outline border type for TextFeild
       borderRadius: BorderRadius.all(Radius.circular(5)),
       borderSide: BorderSide(
-        color: Colors.blueAccent,
+        color: Colors.blue[100],
         width: 1,
       ));
 }
@@ -28,7 +28,7 @@ Inputan(String label, TextEditingController ctr) {
       TextField(
           controller: ctr,
           decoration: InputDecoration(
-            prefixIcon: Icon(Icons.format_align_right),
+            prefixIcon: Icon(Icons.chevron_left),
             labelText: label,
             filled: true,
             fillColor: Colors.blue[50],

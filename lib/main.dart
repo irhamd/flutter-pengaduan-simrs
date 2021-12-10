@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Home(title: 'APPLIKASI PENGADUAN SIMRS'),
       routes: {
-        '/second': (cx) => const TestCamera(),
+        '/camera': (cx) => const TestCamera(),
         '/hal': (cx) => const HalamanHorizontal(),
         '/rest_get': (cx) => const RestGet(),
         '/rest_post': (cx) => const RestPost(),
