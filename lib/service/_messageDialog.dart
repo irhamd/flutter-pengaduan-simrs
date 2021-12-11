@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: non_constant_identifier_names
 ShowMessage(String msg, BuildContext context) async {
   return showDialog<void>(
     context: context,
@@ -10,7 +11,7 @@ ShowMessage(String msg, BuildContext context) async {
         content: SingleChildScrollView(),
         actions: <Widget>[
           TextButton(
-            child: const Text('Oke Bro'),
+            child: const Text('Aok aneh .'),
             onPressed: () {
               Navigator.of(context).pop();
             },

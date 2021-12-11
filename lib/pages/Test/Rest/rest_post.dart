@@ -1,7 +1,8 @@
 import 'package:applikasi_pelaporan_simrs/service/_input.dart';
+import 'package:applikasi_pelaporan_simrs/service/_messageDialog.dart';
+import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
 import 'package:applikasi_pelaporan_simrs/service/api/api_post.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_plus/flutter_plus.dart';
 
 class RestPost extends StatefulWidget {
   const RestPost({key}) : super(key: key);
@@ -13,6 +14,7 @@ class RestPost extends StatefulWidget {
 class _RestPostState extends State<RestPost> {
   int hargaB = 0;
   String nama = "2";
+
   // TextEditingController namapekerjaan = TextEditingController();
   // TextEditingController sss = TextEditingController();
 
@@ -32,52 +34,68 @@ class _RestPostState extends State<RestPost> {
     });
   }
 
+  renderTombol(String icon, title) {
+    return Column(
+      children: [
+        (ButtonTheme(
+          minWidth: MediaQuery.of(context).size.width,
+          height: 100.0,
+          // ignore: deprecated_member_use
+          child: RaisedButton(
+            onPressed: () {
+              ShowMessage(
+                  "Mohon Tunggu, Permintaan anda sudah di kirim ke simrs",
+                  context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  Image.asset(
+                    "assets/" + icon + ".png",
+                    width: 90,
+                  ),
+                  br(),
+                  Text(title),
+                ],
+              ),
+            ),
+          ),
+        )),
+        br(),
+        br(),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Ini rest post"),
+          title: Text("APA KELUHAN ANDA ?"),
         ),
-        body: Padding(
-          padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
-          child: Column(
-            children: <Widget>[
-              // TextField(
-              //   controller: sss,
-              // ),
-              Inputan("ID", sss),
-              // TextFieldPlus(
-              //   controller: sss,
-              //   padding: EdgeInsets.symmetric(horizontal: 8),
-              //   margin: EdgeInsets.only(top: 10),
-              //   height: 60,
-              //   backgroundColor: Colors.black12,
-              //   enabled: true,
-              //   placeholder: TextPlus(
-              //     'ID',
-              //     color: Colors.black38,
-              //   ),
-              //   prefixWidget: Icon(
-              //     Icons.addchart,
-              //   ),
-              // ),
-              TextFieldPlus(
-                // controller: namapekerjaan,
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                margin: EdgeInsets.only(top: 10),
-                height: 60,
-                backgroundColor: Colors.black12,
-                enabled: true,
-                placeholder: TextPlus(
-                  'ID',
-                  color: Colors.black38,
+        body: Container(
+          decoration: gradientColor(),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(40, 20, 40, 0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  " SIMRS melayani dengan hati dan mengangani dengan b3c@t .!",
+                  textAlign: TextAlign.center,
                 ),
-                prefixWidget: Icon(
-                  Icons.format_align_right,
-                ),
-              ),
-              ElevatedButton(onPressed: _simpanData, child: Text("Simpan"))
-            ],
+                br(),
+                renderTombol("error", "SIMRS ERROR"),
+                renderTombol("no-internet", "JARINGAN TIDAK KONEK"),
+                renderTombol("devices", "ALAT KANTOR TROUBLE"),
+                Text(
+                  "Ⓒ2021 copyright simrs-rsudkotamataram",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.grey),
+                )
+              ],
+            ),
           ),
         ));
   }

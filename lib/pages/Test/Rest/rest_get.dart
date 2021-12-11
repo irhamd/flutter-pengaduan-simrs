@@ -1,4 +1,3 @@
-import 'package:applikasi_pelaporan_simrs/pages/Test/Rest/rest_post.dart';
 import 'package:applikasi_pelaporan_simrs/service/api/api_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -24,7 +23,7 @@ class _RestGetState extends State<RestGet> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ini resss"),
+        title: Text("TUGAS UNTUK ANDA"),
       ),
       body: Container(
         // ignore: missing_required_param
@@ -47,22 +46,22 @@ class _RestGetState extends State<RestGet> {
                         child: Slidable(
                             key: const ValueKey(0),
                             startActionPane: ActionPane(
+                              dismissible: DismissiblePane(onDismissed: () {}),
                               motion: const ScrollMotion(),
-                              // dismissible: DismissiblePane(onDismissed: () {}),
                               children: const [
                                 SlidableAction(
-                                  onPressed: null,
-                                  backgroundColor: Color(0xFFFE4A49),
+                                  onPressed: acceptTugas,
+                                  backgroundColor: Colors.green,
                                   foregroundColor: Colors.white,
-                                  icon: Icons.delete,
-                                  label: 'Delete',
+                                  icon: Icons.control_point_duplicate,
+                                  label: 'Accept',
                                 ),
                                 SlidableAction(
                                   onPressed: null,
-                                  backgroundColor: Colors.amberAccent,
+                                  backgroundColor: Colors.red,
                                   foregroundColor: Colors.white,
-                                  icon: Icons.read_more,
-                                  label: 'Delete',
+                                  icon: Icons.low_priority,
+                                  label: 'Reject',
                                 ),
                               ],
                             ),
@@ -74,9 +73,9 @@ class _RestGetState extends State<RestGet> {
                               ),
                               onTap: () {},
                               onLongPress: () {},
-                              title: Text("Anda berada di mana saja"),
+                              title: Text("IRNA 1C"),
                               subtitle: Text(
-                                  "Komputer tidak bosa kopnne d ddsbfsuidfa sdfasidf sadfu "),
+                                  "Komputer tidak bisa konnek karena apa munkin penyebabnya broo. "),
                             )),
                       );
                     });
@@ -87,4 +86,8 @@ class _RestGetState extends State<RestGet> {
       ),
     );
   }
+}
+
+void acceptTugas(BuildContext context) {
+  Navigator.pushNamed(context, "/camera");
 }

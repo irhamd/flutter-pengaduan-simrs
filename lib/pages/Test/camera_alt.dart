@@ -15,16 +15,25 @@ class TestCamera extends StatefulWidget {
 
 class TestCameraState extends State<TestCamera> {
   File _imagesebelum;
+  File _imagesesudah;
   TextEditingController masalah = TextEditingController();
   TextEditingController jika = TextEditingController();
 
   final imagePicker = ImagePicker();
 
-  Future getImage() async {
+  Future getImageSebelum() async {
     final gambar = await imagePicker.getImage(source: ImageSource.camera);
 
     setState(() {
       _imagesebelum = File(gambar.path);
+    });
+  }
+
+  Future getImageSesudah() async {
+    final gambar = await imagePicker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      _imagesesudah = File(gambar.path);
     });
   }
 
@@ -44,23 +53,56 @@ class TestCameraState extends State<TestCamera> {
               children: [
                 Inputan("Permasalahan", masalah),
                 Inputan("Penyebab", jika),
-                Text("Foto sebelum "),
                 br(),
                 _imagesebelum == null
-                    ? Text("belum ada gambar")
+                    ? Text("belum ada gambar sebelum")
                     : Image.file(_imagesebelum),
+                br(),
+                Text("Foto sebelum "),
+                ElevatedButton(
+                    onPressed: () {
+                      // _showMyDialog("dddd", context);
+                      getImageSebelum();
+                    },
+                    child: Center(
+                      child: Align(
+                        alignment: Alignment
+                            .center, // Align however you like (i.e .centerRight, centerLeft)
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.camera_alt),
+                            Text("Ambil gambar"),
+                          ],
+                        ),
+                      ),
+
+                      // Row(
+                      //   children: [
+                      //     Text("Ambil gambar"),
+                      //     Icon(Icons.camera_alt),
+                      //   ],
+                      // ),
+                      // Text( Center(
+                      //   chil
+                      //   "Ambil gambar ",
+                      //   textAlign: TextAlign.center,
+                      //   style: TextStyle(fontStyle: FontStyle.normal),
+                      // )
+                      // ),
+                    )),
+                br(),
+                _imagesesudah == null
+                    ? Text("belum ada gambar setelah")
+                    : Image.file(_imagesesudah),
+                br(),
                 Text("Foto sesudah "),
                 ElevatedButton(
                     onPressed: () {
                       // _showMyDialog("dddd", context);
-                      getImage();
+                      getImageSesudah();
                     },
                     child: Icon(Icons.camera_alt)),
-                ElevatedButton(
-                    onPressed: () {
-                      getMasalah();
-                    },
-                    child: Icon(Icons.search)),
               ],
             ),
           ),
