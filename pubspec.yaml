@@ -19,6 +19,9 @@ dependencies:
   fluttertoast: ^8.0.8
   http: ^0.13.3
   flutter_slidable: ^1.1.0
+  pull_to_refresh: ^2.0.0
+  jiffy: ^4.1.0
+  timeago: ^3.1.0
 
   # firebase_core: ^1.1.0
   # firebase_messaging: ^9.1.3

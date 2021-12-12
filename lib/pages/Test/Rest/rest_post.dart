@@ -21,16 +21,18 @@ class _RestPostState extends State<RestPost> {
   TextEditingController sss = TextEditingController();
 
   void _simpanData() {
-    print(sss.text.toString());
+    // print(sss.text.toString());
     // PostData.simpanData({"banaa": "dddd"});
-    PostData.simpanDataDB({
-      "id": sss.text.toString(),
-      "jenis": "tender",
-      "jenispekerjaan": "3",
-      "namapekerjaan": "bebeass",
-      "tahunanggaran": "2021"
+    Api.post("pengaduan-simpanPengaduan", {
+      "unitkerja": "Ruangan Nifas",
+      "nohp": "admin1",
+      "isipengaduan": "SIMRS error",
+      "assignto": "1"
     }).then((val) {
-      print(val["sts"]);
+      print(val['sts']);
+      if (val["sts"] == 1) {
+        ShowMessage("Mohon Tunggu, keluhan anda sedang di proses ...", context);
+      }
     });
   }
 
@@ -43,9 +45,7 @@ class _RestPostState extends State<RestPost> {
           // ignore: deprecated_member_use
           child: RaisedButton(
             onPressed: () {
-              ShowMessage(
-                  "Mohon Tunggu, Permintaan anda sudah di kirim ke simrs",
-                  context);
+              _simpanData();
             },
             child: Padding(
               padding: const EdgeInsets.all(10.0),

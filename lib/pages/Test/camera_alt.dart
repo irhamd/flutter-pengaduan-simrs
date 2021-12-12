@@ -54,11 +54,12 @@ class TestCameraState extends State<TestCamera> {
                 Inputan("Permasalahan", masalah),
                 Inputan("Penyebab", jika),
                 br(),
+                Text("Foto sebelum "),
+                br(),
                 _imagesebelum == null
                     ? Text("belum ada gambar sebelum")
                     : Image.file(_imagesebelum),
                 br(),
-                Text("Foto sebelum "),
                 ElevatedButton(
                     onPressed: () {
                       // _showMyDialog("dddd", context);
@@ -72,24 +73,10 @@ class TestCameraState extends State<TestCamera> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.camera_alt),
-                            Text("Ambil gambar"),
+                            Text(" Foto sebelum"),
                           ],
                         ),
                       ),
-
-                      // Row(
-                      //   children: [
-                      //     Text("Ambil gambar"),
-                      //     Icon(Icons.camera_alt),
-                      //   ],
-                      // ),
-                      // Text( Center(
-                      //   chil
-                      //   "Ambil gambar ",
-                      //   textAlign: TextAlign.center,
-                      //   style: TextStyle(fontStyle: FontStyle.normal),
-                      // )
-                      // ),
                     )),
                 br(),
                 _imagesesudah == null
@@ -102,7 +89,19 @@ class TestCameraState extends State<TestCamera> {
                       // _showMyDialog("dddd", context);
                       getImageSesudah();
                     },
-                    child: Icon(Icons.camera_alt)),
+                    child: Center(
+                      child: Align(
+                        alignment: Alignment
+                            .center, // Align however you like (i.e .centerRight, centerLeft)
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.camera_alt),
+                            Text(" Foto sesudah"),
+                          ],
+                        ),
+                      ),
+                    )),
               ],
             ),
           ),
