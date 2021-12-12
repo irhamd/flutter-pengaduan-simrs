@@ -1,11 +1,16 @@
 import 'package:applikasi_pelaporan_simrs/pages/Test/Rest/rest_get.dart';
 import 'package:applikasi_pelaporan_simrs/pages/Test/Rest/rest_post.dart';
+import 'package:applikasi_pelaporan_simrs/pages/Test/TestFirestore.dart';
 import 'package:applikasi_pelaporan_simrs/pages/Test/camera_alt.dart';
 import 'package:applikasi_pelaporan_simrs/pages/Test/halaman_horizontal.dart';
 import 'package:applikasi_pelaporan_simrs/pages/home.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -23,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/hal': (cx) => const HalamanHorizontal(),
         '/rest_get': (cx) => const RestGet(),
         '/rest_post': (cx) => const RestPost(),
+        '/test_firestore': (cx) => const TestFirestore(),
       },
     );
   }

@@ -41,6 +41,11 @@ class _HomeState extends State<Home> {
               child: Text("Rest Post")),
           ElevatedButton(
               onPressed: () {
+                Navigator.pushNamed(context, "/test_firestore");
+              },
+              child: Text("Test firestore")),
+          ElevatedButton(
+              onPressed: () {
                 Navigator.pushNamed(context, "/camera");
               },
               child: Text("Camera"))
