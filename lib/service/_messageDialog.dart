@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // ignore: non_constant_identifier_names
 ShowMessage(String msg, BuildContext context) async {
@@ -20,4 +21,17 @@ ShowMessage(String msg, BuildContext context) async {
       );
     },
   );
+}
+
+// ignore: non_constant_identifier_names
+ShowToastr(String msg) {
+  // ignore: non_constant_identifier_names
+  Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.SNACKBAR,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 26.0);
 }

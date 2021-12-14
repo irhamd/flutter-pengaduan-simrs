@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:applikasi_pelaporan_simrs/service/_input.dart';
 import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
+import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -51,15 +52,23 @@ class TestCameraState extends State<TestCamera> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Inputan("Permasalahan", masalah),
+                Text(VarTitle),
+                Inputan(
+                  "Permasalahan",
+                  TextEditingController()..text = Var_keluhan,
+                ),
+                Inputan(
+                  "Nomor HP",
+                  TextEditingController()..text = Var_phoneNumber,
+                ),
                 Inputan("Penyebab", jika),
-                br(),
+                br(null),
                 Text("Foto sebelum "),
-                br(),
+                br(null),
                 _imagesebelum == null
                     ? Text("belum ada gambar sebelum")
                     : Image.file(_imagesebelum),
-                br(),
+                br(null),
                 ElevatedButton(
                     onPressed: () {
                       // _showMyDialog("dddd", context);
@@ -78,11 +87,11 @@ class TestCameraState extends State<TestCamera> {
                         ),
                       ),
                     )),
-                br(),
+                br(null),
                 _imagesesudah == null
                     ? Text("belum ada gambar setelah")
                     : Image.file(_imagesesudah),
-                br(),
+                br(null),
                 Text("Foto sesudah "),
                 ElevatedButton(
                     onPressed: () {

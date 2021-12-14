@@ -27,6 +27,8 @@ Inputan(String label, TextEditingController ctr) {
       SizedBox(height: 10),
       TextField(
           controller: ctr,
+          minLines: 1, //Normal textInputField will be displayed
+          maxLines: 15, // whe
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.chevron_left),
             labelText: label,
@@ -39,6 +41,6 @@ Inputan(String label, TextEditingController ctr) {
   ));
 }
 
-br() {
-  return (SizedBox(height: 10));
+br(double height) {
+  return (SizedBox(height: height != null ? height : 10));
 }

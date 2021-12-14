@@ -2,9 +2,11 @@
 
 import 'dart:convert';
 
+import 'package:applikasi_pelaporan_simrs/service/api/_api.dart';
 import "package:http/http.dart" as http;
 
-String baseUrl = "http://192.168.137.1:3367/api/";
+// String baseUrl = "http://192.168.137.1:3367/api/";
+// String baseUrl = "http://10.10.102.3:3367/api/";
 
 class PostData {
   static simpanDataDB(Object obj) async {
@@ -15,7 +17,7 @@ class PostData {
     return data;
   }
 
-  static Uri uri = Uri.parse("https://reqres.in/api/users?per_page=15");
+  // static Uri uri = Uri.parse("https://reqres.in/api/users?per_page=15");
 }
 
 var headers = {
