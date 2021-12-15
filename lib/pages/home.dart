@@ -88,7 +88,12 @@ class _HomeState extends State<Home> {
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             // Inputan("inputann11", null),
             // Inputan("inputann11", null),
-            fillCards(),
+            // fillCards(),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/test_upload_image");
+                },
+                child: Text("Test upload image")),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, "/rest_get");

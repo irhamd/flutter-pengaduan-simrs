@@ -1,5 +1,6 @@
 import 'package:applikasi_pelaporan_simrs/pages/home/iniDrawer.dart';
 import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
+import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
 import 'package:flutter/material.dart';
 
 class HomeDrawer extends StatelessWidget {
@@ -67,6 +68,58 @@ class HomeDrawer extends StatelessWidget {
                 style: TextStyle(color: Colors.green),
               ),
               subtitle: Text("La bourse de December..."),
+            ),
+            Container(
+              decoration: gradientColor(),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Inputan("inputann11", null),
+                      // Inputan("inputann11", null),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/rest_get");
+                          },
+                          child: Text("Rest Get")),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/rest_post");
+                          },
+                          child: Text("Rest Post")),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/test_firestore");
+                          },
+                          child: Text("Test firestore")),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/login");
+                          },
+                          child: Text("Login")),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/camera");
+                          },
+                          child: Text("Camera")),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/home1");
+                          },
+                          child: Text("Home 1")),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/proses_pengaduan");
+                          },
+                          child: Text(VarTitle.toString())),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/test_upload_image");
+                          },
+                          child: Text("Test Upload Image")),
+                    ]),
+              ),
             ),
           ],
         ),

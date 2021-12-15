@@ -1,6 +1,7 @@
 // ignore_for_file: unused_element
 
 import 'dart:convert';
+import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
 import "package:http/http.dart" as http;
 
 // String baseUrl = "http://192.168.137.1:3367/api/";
@@ -8,7 +9,7 @@ final baseUrl = "http://10.10.102.3:3367/api/";
 
 var _headers = {
   // 'Authorization': "Bearer 234|nMVvKasZ3iOBgt4DclDtcfnIWyRB9JC6QNhXNw5X",
-  'Authorization': "Bearer 235|Wj5Yzzkd642SsRfN63BzUTOEl2oT7C3cqaXY0D89",
+  'Authorization': "Bearer $Var_tokenx",
   "Accept": "application/json"
 };
 
@@ -28,21 +29,14 @@ class Api_ {
     // }
 
     Uri uri = Uri.parse(baseUrl + "pengaduan-getKeluhanPasien");
-    var result = await http.get(uri, headers: {
-      'Authorization': "Bearer 234|nMVvKasZ3iOBgt4DclDtcfnIWyRB9JC6QNhXNw5X",
-      "Accept": "application/json"
-    });
+    var result = await http.get(uri, headers: _headers);
     return json.decode(result.body);
   }
 
   static Future<List<dynamic>> getFuture(String route) async {
-    // var result = await http.get(PostData.uri);
-    // return json.decode(result.body)['data'];
-
-    // return Api_.get("pengaduan-getKeluhanPasien");
-
-    print(baseUrl);
     Uri uri = Uri.parse(baseUrl + route);
+    print(baseUrl + route);
+    print(Var_tokenx);
     var result = await http.get(uri, headers: _headers);
     return json.decode(result.body);
   }

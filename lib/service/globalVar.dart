@@ -11,5 +11,6 @@ String Var_nomor_pengaduan = "";
 String Var_isi_pengaduan = "";
 String Var_ruangan_pengaduan = "";
 // ignore: non_constant_identifier_names
-
+String Var_tokenx = "";
+String Var_idpengaduan = "";
 Object Var_object_pengaduan = {};

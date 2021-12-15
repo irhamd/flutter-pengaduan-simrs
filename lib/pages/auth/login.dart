@@ -1,7 +1,12 @@
 import 'package:applikasi_pelaporan_simrs/service/_input.dart';
+import 'package:applikasi_pelaporan_simrs/service/_messageDialog.dart';
 import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
+import 'package:applikasi_pelaporan_simrs/service/api/api_post.dart';
+import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:mobile_number/mobile_number.dart';
 
 class Login extends StatefulWidget {
   const Login({key}) : super(key: key);
@@ -11,6 +16,72 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final box = GetStorage();
+
+  final TextEditingController user = TextEditingController();
+  final TextEditingController pass = TextEditingController();
+
+  String phoneNumber, _phoneNumber = "";
+  String nomorhp = GetStorage().read('nomorhp') != null
+      ? GetStorage().read('nomorhp')
+      : "no phone";
+
+  @override
+  void initState() {
+    MobileNumber.listenPhonePermission((isPermissionGranted) {
+      if (isPermissionGranted) {
+        initMobileNumberState();
+      }
+    });
+    initMobileNumberState();
+
+    super.initState();
+  }
+
+  void _attemptLogin() {
+    Object obj = {
+      "name": user.text.toString(),
+      "password": pass.text.toString()
+    };
+
+    Api.post("loginRev", obj).then((val) {
+      // print(val.toString());
+      if (val["user"] != null) {
+        Var_tokenx = val["token"].toString();
+        box.write('nomorhp', _phoneNumber);
+        Navigator.pushReplacementNamed(context, '/home');
+        // ShowMessage("Mohon Tunggu, keluhan anda sedang di proses ...", context);
+      } else {
+        ShowToastr("usersalahh");
+      }
+    });
+  }
+
+  Future<void> initMobileNumberState() async {
+    if (!await MobileNumber.hasPhonePermission) {
+      await MobileNumber.requestPhonePermission;
+      return;
+    }
+    String mobileNumber = '';
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      mobileNumber = (await MobileNumber.mobileNumber);
+    } on PlatformException catch (e) {
+      debugPrint("Failed to get mobile number because of '${e.message}'");
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    box.write('nomorhp', mobileNumber);
+    setState(() {
+      Var_phoneNumber = mobileNumber;
+      _phoneNumber = mobileNumber;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,14 +118,14 @@ class _LoginState extends State<Login> {
                     child: Column(
                       children: [
                         Text(
-                          'SISTEM PENGADUAN ONLINE',
+                          'SISTEM PENGADUAN SIMRS',
                           style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                         Text(
-                          'SIMRS',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                          _phoneNumber,
+                          style: TextStyle(color: Colors.black38, fontSize: 18),
                         ),
-                        Text('Rsud Kota Mataram'),
+                        Text("RSUD Kota Mataram"),
                       ],
                     ),
                   ),
@@ -79,6 +150,7 @@ class _LoginState extends State<Login> {
                         BoxShadow(color: Colors.black12, blurRadius: 5)
                       ]),
                   child: TextField(
+                    controller: user,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       icon: Icon(
@@ -103,6 +175,7 @@ class _LoginState extends State<Login> {
                       ]),
                   child: TextField(
                     obscureText: true,
+                    controller: pass,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       icon: Icon(
@@ -118,7 +191,7 @@ class _LoginState extends State<Login> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 16, right: 32),
                     child: Text(
-                      'Forgot Password ?',
+                      'Lupa password ?',
                       style: TextStyle(color: Colors.grey),
                     ),
                   ),
@@ -126,7 +199,7 @@ class _LoginState extends State<Login> {
                 br(20),
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, '/home');
+                    _attemptLogin();
                   },
                   child: Container(
                     height: 45,
@@ -158,16 +231,14 @@ class _LoginState extends State<Login> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("Dnon't have an account ?"),
+                Text("@2021 simrs-rsudkotamataram"),
                 Text(
-                  "Sign Up",
+                  "#fhd",
                   style: TextStyle(color: Color(0xff6bceff)),
                 ),
               ],
             ),
-            onTap: () {
-              Navigator.pushNamed(context, '/signup');
-            },
+            onTap: () {},
           ),
         ],
       ),

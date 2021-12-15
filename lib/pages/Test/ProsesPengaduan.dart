@@ -247,7 +247,7 @@ class _ProsesPengaduanState extends State<ProsesPengaduan> {
                   br(10),
                   // fillCards(),
                   renderDilihatOleh(),
-                  renderChat(),
+                  // renderChat(),
                   br(10),
                   inputPesan(),
                 ],

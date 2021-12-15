@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:applikasi_pelaporan_simrs/service/_input.dart';
 import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
+import 'package:applikasi_pelaporan_simrs/service/api/api_post.dart';
+import 'package:applikasi_pelaporan_simrs/service/forms/_Button.dart';
 import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:custom_switch/custom_switch.dart';
 
 class TestCamera extends StatefulWidget {
   const TestCamera({key}) : super(key: key);
@@ -18,7 +22,19 @@ class TestCameraState extends State<TestCamera> {
   File _imagesebelum;
   File _imagesesudah;
   TextEditingController masalah = TextEditingController();
-  TextEditingController jika = TextEditingController();
+  TextEditingController penyabab = TextEditingController();
+  TextEditingController solusi = TextEditingController();
+
+  Map<String, dynamic> data = json.decode(Var_keluhan);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // print(Var_keluhan);
+
+    // Object obj = jsonDecode(Var_keluhan);
+  }
 
   final imagePicker = ImagePicker();
 
@@ -38,6 +54,8 @@ class TestCameraState extends State<TestCamera> {
     });
   }
 
+  bool status = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,13 +73,28 @@ class TestCameraState extends State<TestCamera> {
                 Text(VarTitle),
                 Inputan(
                   "Permasalahan",
-                  TextEditingController()..text = Var_keluhan,
+                  TextEditingController()..text = data['isipengaduan'],
                 ),
                 Inputan(
                   "Nomor HP",
-                  TextEditingController()..text = Var_phoneNumber,
+                  TextEditingController()..text = data['nohp'],
                 ),
-                Inputan("Penyebab", jika),
+                Inputan(
+                  "Ruangan",
+                  TextEditingController()..text = data['unitkerja'],
+                ),
+                Inputan("Penyebab", penyabab),
+                Inputan("Solusi", solusi),
+                br(null),
+                CustomSwitch(
+                  activeColor: Colors.green,
+                  value: status,
+                  onChanged: (value) {
+                    setState(() {
+                      status = value;
+                    });
+                  },
+                ),
                 br(null),
                 Text("Foto sebelum "),
                 br(null),
@@ -111,6 +144,7 @@ class TestCameraState extends State<TestCamera> {
                         ),
                       ),
                     )),
+                Button_(simpanFollowUp, " Simpan", Icons.download_done)
               ],
             ),
           ),
@@ -119,10 +153,21 @@ class TestCameraState extends State<TestCamera> {
     );
   }
 
+  simpanFollowUp() {
+    Api.post("pengaduan-simpanFollowUpPengaduan", {
+      "id": data["id"].toString(),
+      "penyebab": penyabab.text.toString(),
+      "solusi": solusi.text.toString(),
+      "close": status == true ? "1" : "0"
+    }).then((res) {
+      print(res.data);
+    });
+  }
+
   getMasalah() {
     String ms = masalah.text.toString();
     setState(() {
-      jika.text = ms.toString();
+      penyabab.text = ms.toString();
     });
   }
 }

@@ -2,6 +2,7 @@ import 'package:applikasi_pelaporan_simrs/pages/Test/ProsesPengaduan.dart';
 import 'package:applikasi_pelaporan_simrs/pages/Test/Rest/rest_get.dart';
 import 'package:applikasi_pelaporan_simrs/pages/Test/Rest/rest_post.dart';
 import 'package:applikasi_pelaporan_simrs/pages/Test/TestFirestore.dart';
+import 'package:applikasi_pelaporan_simrs/pages/Test/TestUploadImage.dart';
 import 'package:applikasi_pelaporan_simrs/pages/Test/camera_alt.dart';
 import 'package:applikasi_pelaporan_simrs/pages/Test/halaman_horizontal.dart';
 import 'package:applikasi_pelaporan_simrs/pages/Test/home1.dart';
@@ -12,11 +13,12 @@ import 'package:applikasi_pelaporan_simrs/pages/home/home_drawer.dart';
 import 'package:applikasi_pelaporan_simrs/pages/home2.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  await GetStorage.init();
   runApp(MyApp());
 }
 
@@ -41,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/proses_pengaduan': (cx) => ProsesPengaduan(),
         '/test_storage': (cx) => TestStorage(),
         '/login': (cx) => Login(),
+        '/test_upload_image': (cx) => TestUploadImage(),
       },
     );
   }

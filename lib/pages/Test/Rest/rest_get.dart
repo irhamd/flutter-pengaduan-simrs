@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:applikasi_pelaporan_simrs/service/api/_api.dart';
 import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -45,8 +47,8 @@ class _RestGetState extends State<RestGet> {
               // ignore: missing_required_param
               decoration: gradientColor(),
               child: FutureBuilder<List<dynamic>>(
-                  future: Api_.getFuture(
-                      "pengaduan-getKeluhanPasien-by-petugas?id_user=2"),
+                  future:
+                      Api_.getFuture("pengaduan-getKeluhanPasien-by-petugas"),
                   // ignore: missing_return
                   builder: (BuildContext context, AsyncSnapshot item) {
                     if (item.hasData) {
@@ -90,11 +92,11 @@ class _RestGetState extends State<RestGet> {
                                     ),
                                     onTap: () {
                                       Var_keluhan =
-                                          item.data[index]['isipengaduan'];
+                                          jsonEncode(item.data[index]);
                                     },
                                     onLongPress: () {
                                       Var_keluhan =
-                                          item.data[index]['isipengaduan'];
+                                          jsonEncode(item.data[index]);
                                       Navigator.pushNamed(context, "/camera");
                                     },
                                     title: Text(item.data[index]['unitkerja']),
