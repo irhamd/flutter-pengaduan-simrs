@@ -1,3 +1,5 @@
+import 'package:applikasi_pelaporan_simrs/service/api/_api.dart';
+import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -15,12 +17,13 @@ IniDrawer(BuildContext context) {
             // ),
             child: CircleAvatar(
               radius: 60.0,
+              backgroundImage: NetworkImage(
+                  baseUrlRoute + "/Users/" + Var_data_login["user"]["foto"]),
               // backgroundColor: Colors.brown.shade800,
-              backgroundImage: AssetImage("assets/petugas.jpg"),
             ),
           ),
-          accountName: Text('Aan Ribahan'),
-          accountEmail: Text(GetStorage().read('nomorhp')),
+          accountName: Text(Var_data_login["pegawai"]["namapegawai"]),
+          accountEmail: Text(Var_data_login["user"]["nohp"]),
         ),
         ListTile(
           leading: CircleAvatar(
@@ -47,14 +50,16 @@ IniDrawer(BuildContext context) {
               CircleAvatar(
                 backgroundColor: Colors.red,
                 child: Text(
-                  "7",
+                  "",
                   style: TextStyle(fontSize: 10),
                 ),
                 radius: 10,
               ),
             ],
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, "/rest_get");
+          },
         ),
         Divider(),
         ListTile(
@@ -71,7 +76,7 @@ IniDrawer(BuildContext context) {
               CircleAvatar(
                 backgroundColor: Colors.red,
                 child: Text(
-                  "1",
+                  "",
                   style: TextStyle(fontSize: 10),
                 ),
                 radius: 10,

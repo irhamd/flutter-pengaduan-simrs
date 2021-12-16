@@ -8,14 +8,14 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
 import "package:timeago/timeago.dart" as timeago;
 
-class RestGet extends StatefulWidget {
-  const RestGet({key}) : super(key: key);
+class TugasPending extends StatefulWidget {
+  const TugasPending({key}) : super(key: key);
 
   @override
-  _RestGetState createState() => _RestGetState();
+  _TugasPendingState createState() => _TugasPendingState();
 }
 
-class _RestGetState extends State<RestGet> {
+class _TugasPendingState extends State<TugasPending> {
   static FirebaseFirestore db = FirebaseFirestore.instance;
   CollectionReference root = db.collection("pengaduan");
 
@@ -44,6 +44,7 @@ class _RestGetState extends State<RestGet> {
         children: <Widget>[
           Expanded(
             child: Container(
+              padding: EdgeInsets.all(10),
               // ignore: missing_required_param
               decoration: gradientColor(),
               child: FutureBuilder<List<dynamic>>(

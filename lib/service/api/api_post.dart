@@ -32,6 +32,4 @@ class Api {
     var data = json.decode(res.body);
     return data;
   }
-
-  static Uri uri = Uri.parse("https://reqres.in/api/users?per_page=15");
 }

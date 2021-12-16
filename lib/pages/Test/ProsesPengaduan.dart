@@ -3,9 +3,12 @@ import 'dart:io';
 
 import 'package:applikasi_pelaporan_simrs/service/_input.dart';
 import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
+import 'package:applikasi_pelaporan_simrs/service/api/_api.dart';
+import 'package:applikasi_pelaporan_simrs/service/api/api_post.dart';
 import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mobile_number/mobile_number.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -21,13 +24,16 @@ class _ProsesPengaduanState extends State<ProsesPengaduan> {
   String _mobileNumber = '';
   List<SimCard> _simCard = <SimCard>[];
 
+  static get http => null;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    EasyLoading.showInfo(Var_idpengaduan);
   }
 
-  var progres = "rq";
+  var progres = "mencari";
   var _nomorpengaduan = "11223442";
 
   static TextEditingController inputChat = TextEditingController();
@@ -171,44 +177,33 @@ class _ProsesPengaduanState extends State<ProsesPengaduan> {
     }
   }
 
+  static getData(String route) async {
+    //   Uri uri = Uri.parse(baseUrl + route);
+    //   var result = await http.get(uri, headers: _headers);
+    //   return json.decode(result.body);
+    // }
+
+    Uri uri = Uri.parse(baseUrl + route);
+    var result = await http.get(
+        uri,
+        headers = {
+          "Authorization": "Bearer 311|dbT6OvrzcaUYK3KAyYdQ7uiLu8Ag84cOPdukyQCG"
+        });
+    Map hasil = json.decode(result.body);
+    print(hasil);
+    // print(hasil);
+    return hasil;
+  }
+
   renderChat() {
-    return (Container(
-      height: 200,
-      decoration: BoxDecoration(
-          color: Colors.cyan[100], borderRadius: BorderRadius.circular(10)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: StreamBuilder<QuerySnapshot>(
-          stream:
-              // Query collectionReference = Firestore.instance.collection("Events").orderBy('field');
-              FirebaseFirestore.instance
-                  .collection('chat')
-                  // .orderBy("createdOn")
-                  .where('nomorpengaduan', isEqualTo: Var_nomor_pengaduan)
-                  // .where('nohp', isEqualTo: _mobileNumber)
-                  .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount: snapshot.data.docs.length ?? 0,
-                  itemBuilder: (context, index) {
-                    DocumentSnapshot doc = snapshot.data.docs[index];
-                    return Container(
-                      padding: EdgeInsets.only(left: 2, right: 2, top: 7),
-                      child: doc['nohp'] == _mobileNumber
-                          ? alignKanan(doc['pesan'], "")
-                          // doc['createdOn'].toDate().toString())
-                          : alignKiri(doc['pesan'], ""
-                              // doc['createdOn'].toDate().toString()
-                              ),
-                    );
-                  });
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
-      ),
+    return (StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('service').snapshots(),
+      builder: (context, snapshot) {
+        // Map aa =
+        getData("pengaduan-CekProgresPengaduan?id=" + Var_idpengaduan);
+
+        return Center(child: CircularProgressIndicator());
+      },
     ));
   }
 
@@ -247,7 +242,7 @@ class _ProsesPengaduanState extends State<ProsesPengaduan> {
                   br(10),
                   // fillCards(),
                   renderDilihatOleh(),
-                  // renderChat(),
+                  renderChat(),
                   br(10),
                   inputPesan(),
                 ],

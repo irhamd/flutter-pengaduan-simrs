@@ -32,6 +32,7 @@ dependencies:
   get_storage: ^2.0.3
   flutter_switch: ^0.3.2
   custom_switch: ^0.0.1
+  flutter_easyloading: ^3.0.3
   # device_info_plus: ^3.1.1
   # device_id: ^0.2.0
 

@@ -5,7 +5,7 @@ gradientColor() {
     gradient: LinearGradient(
         colors: [
           Colors.blue[200],
-          Colors.white,
+          Colors.white54,
         ],
         begin: const FractionalOffset(0.0, 0.0),
         end: const FractionalOffset(1.0, 0.0),

@@ -48,13 +48,13 @@ class _RestPostState extends State<RestPost> {
       "nomorpengaduan": GetRandomString(7),
       "nohp": Var_phoneNumber,
       "isipengaduan": Var_isi_pengaduan,
-      "assignto": "1"
+      // "assignto": "1"
     };
 
     Api.post("pengaduan-simpanPengaduan", obj).then((val) {
-      print(val['sts']);
       if (val["sts"] == 1) {
         Navigator.pushNamed(context, "/proses_pengaduan");
+        Var_idpengaduan = val["id"].toString();
         // ShowMessage("Mohon Tunggu, keluhan anda sedang di proses ...", context);
       }
     });

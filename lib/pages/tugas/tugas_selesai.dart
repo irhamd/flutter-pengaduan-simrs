@@ -8,14 +8,14 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
 import "package:timeago/timeago.dart" as timeago;
 
-class RestGet extends StatefulWidget {
-  const RestGet({key}) : super(key: key);
+class TugasSelesai extends StatefulWidget {
+  const TugasSelesai({key}) : super(key: key);
 
   @override
-  _RestGetState createState() => _RestGetState();
+  _TugasSelesaiState createState() => _TugasSelesaiState();
 }
 
-class _RestGetState extends State<RestGet> {
+class _TugasSelesaiState extends State<TugasSelesai> {
   static FirebaseFirestore db = FirebaseFirestore.instance;
   CollectionReference root = db.collection("pengaduan");
 
@@ -38,7 +38,7 @@ class _RestGetState extends State<RestGet> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("TUGAS UNTUK ANDA"),
+        title: Text("RIWAYAT TUGAS"),
       ),
       body: Column(
         children: <Widget>[
@@ -48,7 +48,7 @@ class _RestGetState extends State<RestGet> {
               decoration: gradientColor(),
               child: FutureBuilder<List<dynamic>>(
                   future: Api_.getFuture(
-                      "pengaduan-getKeluhanPasien-by-petugas?status=0"),
+                      "pengaduan-getKeluhanPasien-by-petugas?status=1"),
                   // ignore: missing_return
                   builder: (BuildContext context, AsyncSnapshot item) {
                     if (item.hasData) {
@@ -68,7 +68,7 @@ class _RestGetState extends State<RestGet> {
                                     motion: const ScrollMotion(),
                                     children: const [
                                       SlidableAction(
-                                        onPressed: acceptTugas,
+                                        onPressed: null,
                                         backgroundColor: Colors.green,
                                         foregroundColor: Colors.white,
                                         icon: Icons.control_point_duplicate,
@@ -88,17 +88,8 @@ class _RestGetState extends State<RestGet> {
                                       radius: 30.0,
                                       // backgroundColor: Colors.brown.shade800,
                                       backgroundImage:
-                                          AssetImage("assets/power.png"),
+                                          AssetImage("assets/done.png"),
                                     ),
-                                    onTap: () {
-                                      Var_keluhan =
-                                          jsonEncode(item.data[index]);
-                                    },
-                                    onLongPress: () {
-                                      Var_keluhan =
-                                          jsonEncode(item.data[index]);
-                                      Navigator.pushNamed(context, "/camera");
-                                    },
                                     title: Text(item.data[index]['unitkerja']),
                                     subtitle: Row(
                                       mainAxisAlignment:
@@ -148,8 +139,4 @@ class _RestGetState extends State<RestGet> {
       ),
     );
   }
-}
-
-acceptTugas(BuildContext context) {
-  Navigator.pushNamed(context, "/camera");
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:applikasi_pelaporan_simrs/service/_input.dart';
 import 'package:applikasi_pelaporan_simrs/service/_messageDialog.dart';
 import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
@@ -5,6 +7,7 @@ import 'package:applikasi_pelaporan_simrs/service/api/api_post.dart';
 import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mobile_number/mobile_number.dart';
 
@@ -28,6 +31,12 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
+    // EasyLoading.showInfo(GetStorage().read('token'));
+    // Navigator.pushReplacementNamed(context, '/home');
+    EasyLoading.showInfo(GetStorage().read('token'));
+    // var ww = jsonDecode(GetStorage().read('token').toString());
+
+    // EasyLoading.showInfo(ww["user"].toString());
     MobileNumber.listenPhonePermission((isPermissionGranted) {
       if (isPermissionGranted) {
         initMobileNumberState();
@@ -39,6 +48,7 @@ class _LoginState extends State<Login> {
   }
 
   void _attemptLogin() {
+    EasyLoading.show(status: "Loading");
     Object obj = {
       "name": user.text.toString(),
       "password": pass.text.toString()
@@ -47,8 +57,9 @@ class _LoginState extends State<Login> {
     Api.post("loginRev", obj).then((val) {
       // print(val.toString());
       if (val["user"] != null) {
+        Var_data_login = val;
         Var_tokenx = val["token"].toString();
-        box.write('nomorhp', _phoneNumber);
+        box.write('token', val.toString());
         Navigator.pushReplacementNamed(context, '/home');
         // ShowMessage("Mohon Tunggu, keluhan anda sedang di proses ...", context);
       } else {

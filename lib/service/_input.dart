@@ -26,6 +26,7 @@ Inputan(String label, TextEditingController ctr) {
     children: [
       SizedBox(height: 10),
       TextField(
+          // readOnly: true,
           controller: ctr,
           minLines: 1, //Normal textInputField will be displayed
           maxLines: 15, // whe

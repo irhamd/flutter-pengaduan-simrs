@@ -2,11 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:applikasi_pelaporan_simrs/service/_input.dart';
+import 'package:applikasi_pelaporan_simrs/service/_messageDialog.dart';
 import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
+import 'package:applikasi_pelaporan_simrs/service/api/_api.dart';
 import 'package:applikasi_pelaporan_simrs/service/api/api_post.dart';
 import 'package:applikasi_pelaporan_simrs/service/forms/_Button.dart';
 import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:custom_switch/custom_switch.dart';
@@ -54,12 +57,12 @@ class TestCameraState extends State<TestCamera> {
     });
   }
 
-  bool status = false;
+  bool status = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange,
+      backgroundColor: Colors.blue,
       appBar: AppBar(title: Text("Input Visite")),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -144,7 +147,7 @@ class TestCameraState extends State<TestCamera> {
                         ),
                       ),
                     )),
-                Button_(simpanFollowUp, " Simpan", Icons.download_done)
+                Button_(simpanFollowUp, " Simpan", Icons.ac_unit_outlined)
               ],
             ),
           ),
@@ -153,15 +156,32 @@ class TestCameraState extends State<TestCamera> {
     );
   }
 
-  simpanFollowUp() {
+  simpanFollowUp1() {
     Api.post("pengaduan-simpanFollowUpPengaduan", {
       "id": data["id"].toString(),
       "penyebab": penyabab.text.toString(),
       "solusi": solusi.text.toString(),
-      "close": status == true ? "1" : "0"
+      "close": status == true ? "0" : "1"
     }).then((res) {
-      print(res.data);
+      print(res);
+      if (res["sts"] == 1) {
+        ShowMessage("Berhasil ...", context);
+      } else {
+        ShowMessage("Gagal simpan data .!", context);
+      }
     });
+  }
+
+  simpanFollowUp() {
+    // EasyLoading.showProgress(0.3, status: 'downloading...');
+    EasyLoading.show(status: 'loading...');
+    Map<String, String> body = {
+      "id": data["id"].toString(),
+      "penyebab": penyabab.text.toString(),
+      "solusi": solusi.text.toString(),
+      "close": status == true ? "1" : "0"
+    };
+    Api_.SaveImageToApi(body, _imagesebelum.path, _imagesesudah.path, context);
   }
 
   getMasalah() {

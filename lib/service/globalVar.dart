@@ -14,3 +14,5 @@ String Var_ruangan_pengaduan = "";
 String Var_tokenx = "";
 String Var_idpengaduan = "";
 Object Var_object_pengaduan = {};
+
+Map Var_data_login;
