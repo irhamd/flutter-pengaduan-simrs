@@ -8,8 +8,12 @@ import "package:http/http.dart" as http;
 
 // String baseUrl = "http://192.168.122.180:3367/api/";
 // String baseUrlRoute = "http://192.168.220.180:3367";
+
 // String baseUrlRoute = "http://10.10.102.3:3367";
-String baseUrlRoute = "http://192.168.220.180:3367";
+
+// String baseUrlRoute = "http://192.168.220.180:3367";
+String baseUrlRoute = "http://192.168.132.180:3367";
+// String baseUrlRoute = "http://172.16.0.77:3367";
 String baseUrl = "$baseUrlRoute/api/";
 
 // final baseUrl = "http://10.10.102.3:3367/api/";
@@ -68,13 +72,14 @@ class Api_ {
     // print(body);
     // print(filepath_sebelum);
     // print(filepath_setelah);
-    Map<String, String> headers = {
+
+    Map<String, String> headers123 = {
       'Content-Type': 'multipart/form-data',
     };
 
     var request = http.MultipartRequest('POST', Uri.parse(route))
       ..fields.addAll(body)
-      ..headers.addAll(headers)
+      ..headers.addAll(_headers)
       ..files.add(
           await http.MultipartFile.fromPath('image_sebelum', filepath_sebelum))
       ..files.add(

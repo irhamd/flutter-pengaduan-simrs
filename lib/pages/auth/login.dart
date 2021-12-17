@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
   void initState() {
     // EasyLoading.showInfo(GetStorage().read('token'));
     // Navigator.pushReplacementNamed(context, '/home');
-    EasyLoading.showInfo(GetStorage().read('token'));
+    // EasyLoading.showInfo(GetStorage().read('token'));
     // var ww = jsonDecode(GetStorage().read('token').toString());
 
     // EasyLoading.showInfo(ww["user"].toString());
@@ -60,7 +60,9 @@ class _LoginState extends State<Login> {
         Var_data_login = val;
         Var_tokenx = val["token"].toString();
         box.write('token', val.toString());
-        Navigator.pushReplacementNamed(context, '/home');
+        print(val.toString());
+        // Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/dashboard');
         // ShowMessage("Mohon Tunggu, keluhan anda sedang di proses ...", context);
       } else {
         ShowToastr("usersalahh");

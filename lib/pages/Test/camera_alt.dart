@@ -63,7 +63,7 @@ class TestCameraState extends State<TestCamera> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue,
-      appBar: AppBar(title: Text("Input Visite")),
+      appBar: AppBar(title: Text("Input Tindakan")),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,

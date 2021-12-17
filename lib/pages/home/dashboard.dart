@@ -1,14 +1,30 @@
 import 'package:applikasi_pelaporan_simrs/pages/home/iniDrawer.dart';
 import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
 import 'package:applikasi_pelaporan_simrs/service/api/_api.dart';
+import 'package:applikasi_pelaporan_simrs/service/forms/_Button.dart';
 import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    EasyLoading.dismiss();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           title: Text("Dashboard"),
         ),
@@ -46,241 +62,89 @@ class Dashboard extends StatelessWidget {
           ],
         ),
         drawer: IniDrawer(context),
-        backgroundColor: Colors.transparent,
         body: Container(
-          padding: EdgeInsets.only(top: 10),
+          height: MediaQuery.of(context).size.height,
           decoration: gradientColor(),
-          child: SafeArea(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Icon(
-                      Icons.menu_open,
-                      color: Colors.white,
-                      size: 52.0,
+          child: SingleChildScrollView(
+            child: Container(
+              // padding: EdgeInsets.only(top: 10),
+              child: SafeArea(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {
+                            scaffoldKey.currentState.openDrawer();
+                          },
+                          child: Icon(
+                            Icons.menu,
+                            color: Colors.blueGrey,
+                            size: 40.0,
+                          ),
+                        ),
+                        Text(Var_data_login["pegawai"]["namapegawai"]),
+                        CircleAvatar(
+                          radius: 50.0,
+                          backgroundImage: AssetImage("assets/petugas.jpg"),
+                          // backgroundColor: Colors.brown.shade800,
+                        ),
+                      ],
                     ),
-                    CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage: AssetImage("assets/petugas.jpg"),
-                      // backgroundColor: Colors.brown.shade800,
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 33, right: 20, top: 20),
-                child: Text(
-                  "Selamat Datang, \nApplikasi Pengaduan SIMRS",
-                  style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Center(
-                  child: Wrap(
-                    spacing: 20,
-                    runSpacing: 20.0,
-                    children: <Widget>[
-                      InkWell(
-                        onTap: () {
-                          EasyLoading.showInfo("status");
-                        },
-                        child: SizedBox(
-                          width: 160.0,
-                          height: 160.0,
-                          child: Card(
-                            color: Colors.blue[900],
-                            elevation: 2.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(20.0),
-                                topRight: Radius.circular(20.0),
-                              ),
-                            ),
-                            child: Center(
-                                child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Image.asset(
-                                    "assets/todo.png",
-                                    width: 64.0,
-                                  ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  Text(
-                                    "Pending",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0),
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Text(
-                                    "2 Tugas",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w100),
-                                  )
-                                ],
-                              ),
-                            )),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 160.0,
-                        height: 160.0,
-                        child: Card(
-                          color: Colors.blue[900],
-                          elevation: 2.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(20.0),
-                              topRight: Radius.circular(20.0),
-                            ),
-                          ),
-                          child: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: <Widget>[
-                                Image.asset(
-                                  "assets/note.png",
-                                  width: 64.0,
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Text(
-                                  "Riwayat",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.0),
-                                ),
-                                SizedBox(
-                                  height: 5.0,
-                                ),
-                                Text(
-                                  "12 Items",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w100),
-                                )
-                              ],
-                            ),
-                          )),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 160.0,
-                        height: 160.0,
-                        child: Card(
-                          color: Colors.blue[900],
-                          elevation: 2.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(20.0),
-                              topRight: Radius.circular(20.0),
-                            ),
-                          ),
-                          child: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: <Widget>[
-                                Image.asset(
-                                  "assets/calendar.png",
-                                  width: 64.0,
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Text(
-                                  "Agenda",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.0),
-                                ),
-                                SizedBox(
-                                  height: 5.0,
-                                ),
-                                Text(
-                                  "4 Tugas",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w100),
-                                )
-                              ],
-                            ),
-                          )),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 160.0,
-                        height: 160.0,
-                        child: Card(
-                          color: Colors.blue[900],
-                          elevation: 2.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(20.0),
-                              topRight: Radius.circular(20.0),
-                            ),
-                          ),
-                          child: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: <Widget>[
-                                Image.asset(
-                                  "assets/settings.png",
-                                  width: 64.0,
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Text(
-                                  "Settings",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.0),
-                                ),
-                                SizedBox(
-                                  height: 5.0,
-                                ),
-                                Text(
-                                  "-",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w100),
-                                )
-                              ],
-                            ),
-                          )),
-                        ),
-                      ),
-                    ],
                   ),
-                ),
-              )
-            ],
-          )),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 33, right: 20, top: 20),
+                    child: Column(
+                      children: [
+                        Text(
+                          "SIMPEL",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 53,
+                            fontWeight: FontWeight.bold,
+                            // fontFamily: 'fontdashboard'
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            "Sistem Informasi  Pelayanan SIMRS",
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+                              fontFamily: 'font2',
+                              // fontWeight: FontWeight.bold
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: Wrap(
+                      spacing: 5,
+                      runSpacing: 5.0,
+                      children: <Widget>[
+                        BigButton("/tugas_pending", "assets/todo.png", "Tugas",
+                            "1", context),
+                        BigButton("/tugas_selesai", "assets/note.png",
+                            'Riwayat', "0", context),
+                        BigButton("/rest_post", "assets/calendar.png", "Agenda",
+                            '-', context),
+                        BigButton(
+                            "", "assets/settings.png", "Setting", '-', context),
+                      ],
+                    ),
+                  )
+                ],
+              )),
+            ),
+          ),
         ));
   }
 }

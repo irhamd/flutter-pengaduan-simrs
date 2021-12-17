@@ -37,6 +37,39 @@ class _TugasPendingState extends State<TugasPending> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xff6bceff),
+        onPressed: () {
+          Navigator.pushNamed(context, "/tugas_pending");
+        },
+        child: Icon(Icons.speaker_phone, color: Colors.white),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (value) => {
+          // EasyLoading.showInfo(value.toString()),
+          // if (value == 0) Navigator.pushNamed(context, "tugas_pending"),
+          if (value == 1) Navigator.pushNamed(context, "/tugas_selesai")
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.rotate_90_degrees_ccw,
+              color: Color(0xff6bceff),
+            ),
+            title: Text(
+              'Pending',
+              style: TextStyle(
+                color: Color(0xff6bceff),
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.playlist_add_check),
+            title: Text('Riwayat Tugas'),
+          ),
+        ],
+      ),
       appBar: AppBar(
         title: Text("TUGAS UNTUK ANDA"),
       ),
@@ -151,6 +184,7 @@ class _TugasPendingState extends State<TugasPending> {
   }
 }
 
-acceptTugas(BuildContext context) {
+// ignore: missing_return
+String acceptTugas(context) {
   Navigator.pushNamed(context, "/camera");
 }
