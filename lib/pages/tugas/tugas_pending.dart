@@ -77,7 +77,7 @@ class _TugasPendingState extends State<TugasPending> {
         children: <Widget>[
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(10),
+              // padding: EdgeInsets.all(10),
               // ignore: missing_required_param
               decoration: gradientColor(),
               child: FutureBuilder<List<dynamic>>(

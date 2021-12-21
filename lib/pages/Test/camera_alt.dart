@@ -6,8 +6,10 @@ import 'package:applikasi_pelaporan_simrs/service/_messageDialog.dart';
 import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
 import 'package:applikasi_pelaporan_simrs/service/api/_api.dart';
 import 'package:applikasi_pelaporan_simrs/service/api/api_post.dart';
+import 'package:applikasi_pelaporan_simrs/service/firebase/_firebase.dart';
 import 'package:applikasi_pelaporan_simrs/service/forms/_Button.dart';
 import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'dart:io';
@@ -57,7 +59,7 @@ class TestCameraState extends State<TestCamera> {
     });
   }
 
-  bool status = true;
+  bool status = false;
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +74,8 @@ class TestCameraState extends State<TestCamera> {
           padding: const EdgeInsets.all(10),
           child: SingleChildScrollView(
             child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(VarTitle),
                 Inputan(
                   "Permasalahan",
                   TextEditingController()..text = data['isipengaduan'],
@@ -147,29 +149,13 @@ class TestCameraState extends State<TestCamera> {
                         ),
                       ),
                     )),
-                Button_(simpanFollowUp, " Simpan", Icons.ac_unit_outlined)
+                Button_(simpanFollowUp, " Simpan", Icons.cloud_done)
               ],
             ),
           ),
         ),
       ),
     );
-  }
-
-  simpanFollowUp1() {
-    Api.post("pengaduan-simpanFollowUpPengaduan", {
-      "id": data["id"].toString(),
-      "penyebab": penyabab.text.toString(),
-      "solusi": solusi.text.toString(),
-      "close": status == true ? "0" : "1"
-    }).then((res) {
-      print(res);
-      if (res["sts"] == 1) {
-        ShowMessage("Berhasil ...", context);
-      } else {
-        ShowMessage("Gagal simpan data .!", context);
-      }
-    });
   }
 
   simpanFollowUp() {
@@ -179,8 +165,11 @@ class TestCameraState extends State<TestCamera> {
       "id": data["id"].toString(),
       "penyebab": penyabab.text.toString(),
       "solusi": solusi.text.toString(),
-      "close": status == true ? "1" : "0"
+      "close": status == false ? "1" : "0"
     };
+
+    var obj = {'createdOn': FieldValue.serverTimestamp()};
+    ListenServiceFireStore();
     Api_.SaveImageToApi(body, _imagesebelum.path, _imagesesudah.path, context);
   }
 

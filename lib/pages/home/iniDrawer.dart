@@ -88,15 +88,13 @@ IniDrawer(BuildContext context) {
         // ListTile(
         //   leading: CircleAvatar(
         //     child: Icon(
-        //       Icons.cached,
+        //       Icons.data_usage,
         //       color: Colors.white,
         //       size: 30.0,
         //     ),
         //   ),
-        //   onTap: () {
-        //     Navigator.pushNamed(context, '/test_storage');
-        //   },
-        //   title: Text("Storage"),
+        //   onTap: () {},
+        //   title: Text("v 1.2"),
         // ),
         ListTile(
           leading: CircleAvatar(

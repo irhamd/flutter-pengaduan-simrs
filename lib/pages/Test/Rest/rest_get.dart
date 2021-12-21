@@ -4,8 +4,10 @@ import 'package:applikasi_pelaporan_simrs/service/api/_api.dart';
 import 'package:applikasi_pelaporan_simrs/service/globalVar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:applikasi_pelaporan_simrs/service/_warna.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import "package:timeago/timeago.dart" as timeago;
 
 class RestGet extends StatefulWidget {
@@ -18,6 +20,7 @@ class RestGet extends StatefulWidget {
 class _RestGetState extends State<RestGet> {
   static FirebaseFirestore db = FirebaseFirestore.instance;
   CollectionReference root = db.collection("pengaduan");
+  RefreshController refreshC = RefreshController();
 
   // Future<List<dynamic>> _fecthDataUsers() async {
   //   // var result = await http.get(PostData.uri);
@@ -40,113 +43,125 @@ class _RestGetState extends State<RestGet> {
       appBar: AppBar(
         title: Text("TUGAS UNTUK ANDA"),
       ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              // ignore: missing_required_param
-              decoration: gradientColor(),
-              child: FutureBuilder<List<dynamic>>(
-                  future: Api_.getFuture(
-                      "pengaduan-getKeluhanPasien-by-petugas?status=0"),
-                  // ignore: missing_return
-                  builder: (BuildContext context, AsyncSnapshot item) {
-                    if (item.hasData) {
-                      return ListView.builder(
-                          // padding: EdgeInsets.all(10),
-                          itemCount: item.data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                  // color: Colors.blue[50],
-                                  border: Border.all(
-                                      width: 0.3, color: Colors.blue[300])),
-                              child: Slidable(
-                                  key: const ValueKey(0),
-                                  startActionPane: ActionPane(
-                                    // dismissible: DismissiblePane(onDismissed: () {}),
-                                    motion: const ScrollMotion(),
-                                    children: const [
-                                      SlidableAction(
-                                        onPressed: acceptTugas,
-                                        backgroundColor: Colors.green,
-                                        foregroundColor: Colors.white,
-                                        icon: Icons.control_point_duplicate,
-                                        label: 'Accept',
-                                      ),
-                                      SlidableAction(
-                                        onPressed: null,
-                                        backgroundColor: Colors.red,
-                                        foregroundColor: Colors.white,
-                                        icon: Icons.low_priority,
-                                        label: 'Reject',
-                                      ),
-                                    ],
-                                  ),
-                                  child: ListTile(
-                                    leading: CircleAvatar(
-                                      radius: 30.0,
-                                      // backgroundColor: Colors.brown.shade800,
-                                      backgroundImage:
-                                          AssetImage("assets/power.png"),
-                                    ),
-                                    onTap: () {
-                                      Var_keluhan =
-                                          jsonEncode(item.data[index]);
-                                    },
-                                    onLongPress: () {
-                                      Var_keluhan =
-                                          jsonEncode(item.data[index]);
-                                      Navigator.pushNamed(context, "/camera");
-                                    },
-                                    title: Text(item.data[index]['unitkerja']),
-                                    subtitle: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width -
-                                              220,
-                                          child: Text(
-                                            item.data[index]['isipengaduan'],
-                                          ),
+      body: SmartRefresher(
+        controller: refreshC,
+        enablePullDown: true,
+        enablePullUp: true,
+        onRefresh: refreshData,
+        footer: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                // ignore: missing_required_param
+                decoration: gradientColor(),
+                child: FutureBuilder<List<dynamic>>(
+                    future: Api_.getFuture(
+                        "pengaduan-getKeluhanPasien-by-petugas?status=0"),
+                    // ignore: missing_return
+                    builder: (BuildContext context, AsyncSnapshot item) {
+                      if (item.hasData) {
+                        return ListView.builder(
+                            // padding: EdgeInsets.all(10),
+                            itemCount: item.data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    // color: Colors.blue[50],
+                                    border: Border.all(
+                                        width: 0.3, color: Colors.blue[300])),
+                                child: Slidable(
+                                    key: const ValueKey(0),
+                                    startActionPane: ActionPane(
+                                      // dismissible: DismissiblePane(onDismissed: () {}),
+                                      motion: const ScrollMotion(),
+                                      children: const [
+                                        SlidableAction(
+                                          onPressed: acceptTugas,
+                                          backgroundColor: Colors.green,
+                                          foregroundColor: Colors.white,
+                                          icon: Icons.control_point_duplicate,
+                                          label: 'Accept',
                                         ),
-                                        Text(
-                                          timeago.format(DateTime.parse(
-                                              item.data[index]['created_at'])),
-                                          style: TextStyle(
-                                              fontStyle: FontStyle.italic),
+                                        SlidableAction(
+                                          onPressed: null,
+                                          backgroundColor: Colors.red,
+                                          foregroundColor: Colors.white,
+                                          icon: Icons.low_priority,
+                                          label: 'Reject',
                                         ),
                                       ],
                                     ),
-                                  )),
-                            );
-                          });
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  }),
+                                    child: ListTile(
+                                      leading: CircleAvatar(
+                                        radius: 30.0,
+                                        // backgroundColor: Colors.brown.shade800,
+                                        backgroundImage:
+                                            AssetImage("assets/power.png"),
+                                      ),
+                                      onTap: () {
+                                        Var_keluhan =
+                                            jsonEncode(item.data[index]);
+                                      },
+                                      onLongPress: () {
+                                        Var_keluhan =
+                                            jsonEncode(item.data[index]);
+                                        Navigator.pushNamed(context, "/camera");
+                                      },
+                                      title:
+                                          Text(item.data[index]['unitkerja']),
+                                      subtitle: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                220,
+                                            child: Text(
+                                              item.data[index]['isipengaduan'],
+                                            ),
+                                          ),
+                                          Text(
+                                            timeago.format(DateTime.parse(item
+                                                .data[index]['created_at'])),
+                                            style: TextStyle(
+                                                fontStyle: FontStyle.italic),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                              );
+                            });
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    }),
+              ),
             ),
-          ),
-          Container(
-            height: 30,
-            width: double.maxFinite,
-            decoration: BoxDecoration(
-              color: Colors.blueGrey[300],
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text("Pastikan semua pekerjaan anda tidak ada yang pending .!")
-              ],
-            ),
-          )
-        ],
+            Container(
+              height: 30,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                color: Colors.blueGrey[300],
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                      "Pastikan semua pekerjaan anda tidak ada yang pending .!")
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  void refreshData() {
+    EasyLoading.showInfo("refreshh");
   }
 }
 

@@ -33,7 +33,7 @@ class _ProsesPengaduanState extends State<ProsesPengaduan> {
     EasyLoading.showInfo(Var_idpengaduan);
   }
 
-  var progres = "mencari";
+  var progres = "11";
   var _nomorpengaduan = "11223442";
 
   static TextEditingController inputChat = TextEditingController();
@@ -185,10 +185,11 @@ class _ProsesPengaduanState extends State<ProsesPengaduan> {
 
     Uri uri = Uri.parse(baseUrl + route);
     var result = await http.get(
-        uri,
-        headers = {
-          "Authorization": "Bearer 311|dbT6OvrzcaUYK3KAyYdQ7uiLu8Ag84cOPdukyQCG"
-        });
+      uri,
+      // headers = {
+      //   "Authorization": "Bearer 311|dbT6OvrzcaUYK3KAyYdQ7uiLu8Ag84cOPdukyQCG"
+      // }
+    );
     Map hasil = json.decode(result.body);
     print(hasil);
     // print(hasil);

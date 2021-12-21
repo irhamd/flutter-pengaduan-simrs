@@ -31,6 +31,8 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
+    Var_tokenx = "";
+
     // EasyLoading.showInfo(GetStorage().read('token'));
     // Navigator.pushReplacementNamed(context, '/home');
     // EasyLoading.showInfo(GetStorage().read('token'));
@@ -60,12 +62,14 @@ class _LoginState extends State<Login> {
         Var_data_login = val;
         Var_tokenx = val["token"].toString();
         box.write('token', val.toString());
-        print(val.toString());
+        print("ini token nya" + Var_tokenx.toString());
         // Navigator.pushReplacementNamed(context, '/home');
         Navigator.pushReplacementNamed(context, '/dashboard');
         // ShowMessage("Mohon Tunggu, keluhan anda sedang di proses ...", context);
       } else {
-        ShowToastr("usersalahh");
+        ShowToastr("User tidak ditemukan");
+        // EasyLoading.showError(" ");
+        EasyLoading.dismiss();
       }
     });
   }
@@ -131,12 +135,8 @@ class _LoginState extends State<Login> {
                     child: Column(
                       children: [
                         Text(
-                          'SISTEM PENGADUAN SIMRS',
+                          'SISTEM PELAYANAN SIMRS',
                           style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                        Text(
-                          _phoneNumber,
-                          style: TextStyle(color: Colors.black38, fontSize: 18),
                         ),
                         Text("RSUD Kota Mataram"),
                       ],
@@ -244,7 +244,7 @@ class _LoginState extends State<Login> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("@2021 simrs-rsudkotamataram"),
+                Text("@2021 $Var_ver simrs-rsudkotamataram"),
                 Text(
                   "#fhd",
                   style: TextStyle(color: Color(0xff6bceff)),

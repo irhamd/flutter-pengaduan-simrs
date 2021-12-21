@@ -42,6 +42,17 @@ class _TestFirestoreState extends State<TestFirestore> {
   //   },
   //   child: Text("Insert")),
 
+  cekFirestore() {
+    return (StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('pengaduan').snapshots(),
+        // ignore: missing_return
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            EasyLoading.showInfo("update");
+          }
+        }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

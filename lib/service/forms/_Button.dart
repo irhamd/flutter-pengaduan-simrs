@@ -4,6 +4,10 @@ Button_(onPressed, title, _icon) {
   return Container(
     height: 40,
     child: (ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            primary: Colors.blue[400],
+            // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+            textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
         onPressed: onPressed,
         child: Center(
           child: Align(
