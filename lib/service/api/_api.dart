@@ -9,10 +9,10 @@ import "package:http/http.dart" as http;
 // String baseUrl = "http://192.168.122.180:3367/api/";
 // String baseUrlRoute = "http://192.168.220.180:3367";
 
-String baseUrlRoute = "http://10.10.102.3:3367";
+// String baseUrlRoute = "http://10.10.102.3:3367";
 
 // String baseUrlRoute = "http://192.168.117.180:3367";
-// String baseUrlRoute = "http://172.16.0.77:3367";
+String baseUrlRoute = "http://172.16.0.77:3367";
 String baseUrl = "$baseUrlRoute/api/";
 
 // final baseUrl = "http://10.10.102.3:3367/api/";

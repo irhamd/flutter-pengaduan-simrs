@@ -11,6 +11,7 @@ import 'package:applikasi_pelaporan_simrs/pages/home/dashboard.dart';
 import 'package:applikasi_pelaporan_simrs/pages/home/home_drawer.dart';
 import 'package:applikasi_pelaporan_simrs/pages/tugas/tugas_pending.dart';
 import 'package:applikasi_pelaporan_simrs/pages/tugas/tugas_selesai.dart';
+import 'package:applikasi_pelaporan_simrs/service/notification/pushNotification.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -24,8 +25,30 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  FirebaseNotifcation firebase;
+
+  handleAsync() async {
+    await firebase.initialize();
+
+    String token = await firebase.getToken();
+    print("Firebase token : $token");
+  }
+
+  @override
+  void initState() {
+    // handleAsync();
+    // TODO: implement initState
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext cx) {
     return MaterialApp(
