@@ -6,12 +6,12 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import "package:http/http.dart" as http;
 import 'package:notification/service/globalVar.dart';
 
-String baseUrlRoute = "http://192.168.112.180:3367";
+// String baseUrlRoute = "http://192.168.112.180:3367";
 
 // String baseUrlRoute = "http://10.10.102.3:3367";
 
 // String baseUrlRoute = "http://192.168.117.180:3367";
-// String baseUrlRoute = "http://172.16.0.77:3367";
+String baseUrlRoute = "http://172.16.0.77:3367";
 String baseUrl = "$baseUrlRoute/api/";
 
 // final baseUrl = "http://10.10.102.3:3367/api/";
@@ -64,8 +64,8 @@ class Api_ {
   }
 
   static Future<bool> SaveImageToApi(Map<String, String> body,
-      String filepath_sebelum, filepath_setelah, contex) async {
-    String route = baseUrl + 'pengaduan-simpanFollowUpPengaduan';
+      String filepath_sebelum, filepath_setelah, routes, contex) async {
+    String route = baseUrl + routes;
     // print(route);
     // print(body);
     // print(filepath_sebelum);

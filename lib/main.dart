@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:notification/pages/Test/ProsesPengaduan.dart';
 import 'package:notification/pages/Test/Rest/rest_get.dart';
 import 'package:notification/pages/Test/Rest/rest_post.dart';
@@ -11,6 +10,7 @@ import 'package:notification/pages/Test/test_storage.dart';
 import 'package:notification/pages/auth/login.dart';
 import 'package:notification/pages/home/dashboard.dart';
 import 'package:notification/pages/home/home_drawer.dart';
+import 'package:notification/pages/tugas/followup_tugas.dart';
 import 'package:notification/pages/tugas/input_tugas.dart';
 import 'package:notification/pages/tugas/tugas_pending.dart';
 import 'package:notification/pages/tugas/tugas_selesai.dart';
@@ -44,7 +44,8 @@ class MyApp extends StatelessWidget {
         '/login': (cx) => Login(),
         '/test_upload_image': (cx) => TestUploadImage(),
         '/dashboard': (cx) => Dashboard(),
-        '/input': (_) => InputTugas(),
+        '/input_tugas': (cx) => InputTugas(),
+        '/follow_up': (cx) => FollowUpTugas(),
       },
     );
   }

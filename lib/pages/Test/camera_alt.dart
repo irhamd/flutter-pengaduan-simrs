@@ -164,7 +164,9 @@ class TestCameraState extends State<TestCamera> {
       "close": status == false ? "1" : "0"
     };
 
-    Api_.SaveImageToApi(body, _imagesebelum.path, _imagesesudah.path, context);
+    var routes = 'pengaduan-simpanFollowUpPengaduan';
+    Api_.SaveImageToApi(
+        body, _imagesebelum.path, _imagesesudah.path, routes, context);
   }
 
   getMasalah() {

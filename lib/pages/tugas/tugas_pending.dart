@@ -127,7 +127,8 @@ class _TugasPendingState extends State<TugasPending> {
                                     onLongPress: () {
                                       Var_keluhan =
                                           jsonEncode(item.data[index]);
-                                      Navigator.pushNamed(context, "/camera");
+                                      Navigator.pushNamed(
+                                          context, "/follow_up");
                                     },
                                     title: Text(item.data[index]['unitkerja']),
                                     subtitle: Row(
@@ -182,5 +183,5 @@ class _TugasPendingState extends State<TugasPending> {
 
 // ignore: missing_return
 String acceptTugas(context) {
-  Navigator.pushNamed(context, "/camera");
+  Navigator.pushNamed(context, "/follow_up");
 }

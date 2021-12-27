@@ -98,24 +98,6 @@ class _LoginState extends State<Login> {
       child: ListView(
         children: <Widget>[
           ///custom itemBuilder and dropDownBuilder
-          Divider(),
-
-          ///BottomSheet Mode with no searchBox
-          DropdownSearch<String>(
-            mode: Mode.BOTTOM_SHEET,
-            items: [
-              "Brazil",
-              "Italia",
-              "Tunisia",
-              'Canada',
-              'Zraoua',
-              'France',
-              'Belgique'
-            ],
-            onChanged: print,
-            showSearchBox: true,
-          ),
-
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 3.5,

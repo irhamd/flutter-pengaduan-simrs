@@ -157,7 +157,7 @@ class _DashboardState extends State<Dashboard> {
                                 textAlign: TextAlign.start,
                               ),
                               Text(
-                                "ver 1.5",
+                                Var_ver,
                                 style: TextStyle(fontSize: 12),
                               )
                             ],
@@ -175,8 +175,8 @@ class _DashboardState extends State<Dashboard> {
                             pending.toString(), context),
                         BigButton("/tugas_selesai", "assets/note.png",
                             'Riwayat', selesai.toString(), context),
-                        BigButton("/rest_post", "assets/calendar.png", "Agenda",
-                            '-', context),
+                        BigButton("/input_tugas", "assets/calendar.png",
+                            "Input", '-', context),
                         BigButton("/home", "assets/settings.png", "Setting",
                             '-', context),
                       ],

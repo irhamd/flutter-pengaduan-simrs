@@ -12,29 +12,21 @@ import 'package:notification/service/api/_api.dart';
 import 'package:notification/service/forms/_Button.dart';
 import 'package:notification/service/globalVar.dart';
 
-class InputTugas extends StatefulWidget {
-  const InputTugas({key}) : super(key: key);
+class FollowUpTugas extends StatefulWidget {
+  const FollowUpTugas({key}) : super(key: key);
 
   @override
-  InputTugasState createState() => InputTugasState();
+  FollowUpTugasState createState() => FollowUpTugasState();
 }
 
-class InputTugasState extends State<InputTugas> {
+class FollowUpTugasState extends State<FollowUpTugas> {
   File _imagesebelum;
   File _imagesesudah;
-  TextEditingController permasalahan = TextEditingController();
+  TextEditingController masalah = TextEditingController();
   TextEditingController penyabab = TextEditingController();
   TextEditingController solusi = TextEditingController();
-  TextEditingController nama = TextEditingController();
-  TextEditingController keterangan = TextEditingController();
-  TextEditingController nohp = TextEditingController();
-  TextEditingController ruangan = TextEditingController();
-  // penyabab,
-  // solusi,
-  // nama,
-  // keterangan,
-  // ruangan,
-  // nohp
+
+  Map<String, dynamic> data = json.decode(Var_keluhan);
 
   @override
   void initState() {
@@ -82,23 +74,18 @@ class InputTugasState extends State<InputTugas> {
               children: [
                 Inputan(
                   "Permasalahan",
-                  permasalahan,
+                  TextEditingController()..text = data['isipengaduan'],
                 ),
                 Inputan(
                   "Nomor HP",
-                  nohp,
-                ),
-                Inputan(
-                  "Nama penanggung jawab",
-                  nama,
+                  TextEditingController()..text = data['nohp'],
                 ),
                 Inputan(
                   "Ruangan",
-                  ruangan,
+                  TextEditingController()..text = data['unitkerja'],
                 ),
                 Inputan("Penyebab", penyabab),
                 Inputan("Solusi", solusi),
-                Inputan("Keterangan", keterangan),
                 br(null),
                 CustomSwitch(
                   activeColor: Colors.green,
@@ -158,7 +145,7 @@ class InputTugasState extends State<InputTugas> {
                         ),
                       ),
                     )),
-                Button_(save, " Simpan", Icons.cloud_done)
+                Button_(simpanFollowUp, " Simpan", Icons.cloud_done)
               ],
             ),
           ),
@@ -167,33 +154,22 @@ class InputTugasState extends State<InputTugas> {
     );
   }
 
-  save() {
-    try {
-      // EasyLoading.showProgress(0.3, status: 'downloading...');
-      EasyLoading.show(status: 'loading...');
-      Map<String, String> body = {
-        "nohp": nohp.text.toString(),
-        "unitkerja": ruangan.text.toString(),
-        "isipengaduan": permasalahan.text,
-        "solusi": solusi.text.toString(),
-        "keterangan": keterangan.text.toString(),
-        "penyebab": penyabab.text.toString(),
-        "nama": nama.text.toString()
-      };
-
-      // print(body.toString());
-
-      var routes = 'pengaduan-simpanInputPengaduan';
-      Api_.SaveImageToApi(
-          body, _imagesebelum.path, _imagesesudah.path, routes, context);
-    } catch (e) {
-      EasyLoading.showError("Gagal simpan data ...");
-      print(e.toString());
-    }
+  simpanFollowUp() {
+    // EasyLoading.showProgress(0.3, status: 'downloading...');
+    EasyLoading.show(status: 'loading...');
+    Map<String, String> body = {
+      "id": data["id"].toString(),
+      "penyebab": penyabab.text.toString(),
+      "solusi": solusi.text.toString(),
+      "close": status == false ? "1" : "0"
+    };
+    var routes = 'pengaduan-simpanFollowUpPengaduan';
+    Api_.SaveImageToApi(
+        body, _imagesebelum.path, _imagesesudah.path, routes, context);
   }
 
   getMasalah() {
-    String ms = permasalahan.text.toString();
+    String ms = masalah.text.toString();
     setState(() {
       penyabab.text = ms.toString();
     });
