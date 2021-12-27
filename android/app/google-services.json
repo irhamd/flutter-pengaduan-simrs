@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "657140331986",
+    "project_id": "simrs-system",
+    "storage_bucket": "simrs-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:657140331986:android:4ee95edc46a6aaacd9840b",
+        "android_client_info": {
+          "package_name": "com.mriz.notification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "657140331986-bscmubm6am4l1j7ookct9vleu300sg02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjB_kPepCQIrWfkrSU7wzf7fNnsEvwRBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "657140331986-bscmubm6am4l1j7ookct9vleu300sg02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:657140331986:android:113883db3b4399dcd9840b",
+        "android_client_info": {
+          "package_name": "com.simpel.simrs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "657140331986-bscmubm6am4l1j7ookct9vleu300sg02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjB_kPepCQIrWfkrSU7wzf7fNnsEvwRBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "657140331986-bscmubm6am4l1j7ookct9vleu300sg02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
