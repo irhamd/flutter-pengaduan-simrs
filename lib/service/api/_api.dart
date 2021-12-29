@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import "package:http/http.dart" as http;
+import 'package:notification/pages/home/dashboard.dart';
 import 'package:notification/service/globalVar.dart';
 
 // String baseUrlRoute = "http://192.168.112.180:3367";
@@ -16,7 +17,7 @@ String baseUrl = "$baseUrlRoute/api/";
 
 // final baseUrl = "http://10.10.102.3:3367/api/";
 
-var _headers = {
+var HeadersS = {
   // 'Authorization': "Bearer 234|nMVvKasZ3iOBgt4DclDtcfnIWyRB9JC6QNhXNw5X",
   'Authorization': "Bearer $Var_tokenx",
   "Accept": "application/json"
@@ -26,40 +27,38 @@ var _headers = {
 class Api_ {
   static post(String url, Object obj) async {
     Uri uri = Uri.parse(baseUrl + url);
-    var res = await http.post(uri, body: obj, headers: _headers);
+    var res = await http.post(uri, body: obj, headers: HeadersS);
     var data = json.decode(res.body);
     return data;
   }
 
   static get(String route) async {
     //   Uri uri = Uri.parse(baseUrl + route);
-    //   var result = await http.get(uri, headers: _headers);
+    //   var result = await http.get(uri, headers: HeadersS);
     //   return json.decode(result.body);
     // }
 
     Uri uri = Uri.parse(baseUrl + "pengaduan-getKeluhanPasien");
-    var result = await http.get(uri, headers: _headers);
+    var result = await http.get(uri, headers: HeadersS);
     return json.decode(result.body);
   }
 
   static getData(String route) async {
     //   Uri uri = Uri.parse(baseUrl + route);
-    //   var result = await http.get(uri, headers: _headers);
+    //   var result = await http.get(uri, headers: HeadersS);
     //   return json.decode(result.body);
     // }
 
     Uri uri = Uri.parse(baseUrl + route);
-    var result = await http.get(uri, headers: _headers);
+    var result = await http.get(uri, headers: HeadersS);
     Map hasil = json.decode(result.body);
-    // print(hasil);
     return hasil;
   }
 
   static Future<List<dynamic>> getFuture(String route) async {
     Uri uri = Uri.parse(baseUrl + route);
-    print(baseUrl + route);
-    print(Var_tokenx);
-    var result = await http.get(uri, headers: _headers);
+
+    var result = await http.get(uri, headers: HeadersS);
     return json.decode(result.body);
   }
 
@@ -77,7 +76,7 @@ class Api_ {
 
     var request = http.MultipartRequest('POST', Uri.parse(route))
       ..fields.addAll(body)
-      ..headers.addAll(_headers)
+      ..headers.addAll(HeadersS)
       ..files.add(
           await http.MultipartFile.fromPath('image_sebelum', filepath_sebelum))
       ..files.add(

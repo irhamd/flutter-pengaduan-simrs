@@ -5,6 +5,7 @@
    <application
         android:name=".Application"
         android:label="Simpel SIMRS"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/logo_launcher"
         android:usesCleartextTraffic="true"
         >

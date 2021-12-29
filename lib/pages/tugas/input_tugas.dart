@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'dart:io';
@@ -10,7 +11,9 @@ import 'package:notification/service/_input.dart';
 import 'package:notification/service/_warna.dart';
 import 'package:notification/service/api/_api.dart';
 import 'package:notification/service/forms/_Button.dart';
+import 'package:notification/service/forms/_dropdown_search.dart';
 import 'package:notification/service/globalVar.dart';
+import "package:http/http.dart" as http;
 
 class InputTugas extends StatefulWidget {
   const InputTugas({key}) : super(key: key);
@@ -22,13 +25,13 @@ class InputTugas extends StatefulWidget {
 class InputTugasState extends State<InputTugas> {
   File _imagesebelum;
   File _imagesesudah;
-  TextEditingController permasalahan = TextEditingController();
-  TextEditingController penyabab = TextEditingController();
-  TextEditingController solusi = TextEditingController();
-  TextEditingController nama = TextEditingController();
-  TextEditingController keterangan = TextEditingController();
-  TextEditingController nohp = TextEditingController();
-  TextEditingController ruangan = TextEditingController();
+  TextEditingController permasalahan,
+      penyabab,
+      solusi,
+      nama,
+      keterangan,
+      nohp,
+      ruangan = TextEditingController();
   // penyabab,
   // solusi,
   // nama,
@@ -36,13 +39,28 @@ class InputTugasState extends State<InputTugas> {
   // ruangan,
   // nohp
 
+  List dataRuangan = [];
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    getRuangan();
     // print(Var_keluhan);
 
     // Object obj = jsonDecode(Var_keluhan);
+  }
+
+  getRuangan() async {
+    // dataRuangan = Api_.getData("pengaduan-getRuangan");
+    Uri uri = Uri.parse(baseUrl + "pengaduan-getRuangan");
+    var result = await http.get(uri, headers: HeadersS);
+
+    setState(() {
+      dataRuangan = json.decode(result.body);
+    });
+    // dataRuangan = hasil;
+    // hasil);
+    // setState(() {});
   }
 
   final imagePicker = ImagePicker();
@@ -55,12 +73,44 @@ class InputTugasState extends State<InputTugas> {
     });
   }
 
-  Future getImageSesudah() async {
-    final gambar = await imagePicker.getImage(source: ImageSource.camera);
+  _getFromGallery(String jj) async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      switch (jj) {
+        case "sebelum":
+          setState(() {
+            _imagesebelum = File(pickedFile.path);
+          });
+          break;
+        case "sesudah":
+          setState(() {
+            _imagesesudah = File(pickedFile.path);
+          });
+          break;
+      }
+    }
+  }
 
-    setState(() {
-      _imagesesudah = File(gambar.path);
-    });
+  Future getImageCamera(jj) async {
+    final gambar = await imagePicker.getImage(source: ImageSource.camera);
+    if (gambar != null) {
+      switch (jj) {
+        case "sebelum":
+          setState(() {
+            _imagesebelum = File(gambar.path);
+          });
+          break;
+        case "sesudah":
+          setState(() {
+            _imagesesudah = File(gambar.path);
+          });
+          break;
+      }
+    }
   }
 
   bool status = false;
@@ -69,7 +119,7 @@ class InputTugasState extends State<InputTugas> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue,
-      appBar: AppBar(title: Text("Input Tindakan")),
+      appBar: AppBar(title: Text("Input Tugas")),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -96,6 +146,7 @@ class InputTugasState extends State<InputTugas> {
                   "Ruangan",
                   ruangan,
                 ),
+                DropdownSearch_("Ruangan", dataRuangan),
                 Inputan("Penyebab", penyabab),
                 Inputan("Solusi", solusi),
                 Inputan("Keterangan", keterangan),
@@ -116,48 +167,96 @@ class InputTugasState extends State<InputTugas> {
                     ? Text("belum ada gambar sebelum")
                     : Image.file(_imagesebelum),
                 br(null),
-                ElevatedButton(
-                    onPressed: () {
-                      // _showMyDialog("dddd", context);
-                      getImageSebelum();
-                    },
-                    child: Center(
-                      child: Align(
-                        alignment: Alignment
-                            .center, // Align however you like (i.e .centerRight, centerLeft)
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.camera_alt),
-                            Text(" Foto sebelum"),
-                          ],
-                        ),
-                      ),
-                    )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          // _showMyDialog("dddd", context);
+                          getImageCamera("sebelum");
+                        },
+                        child: Center(
+                          child: Align(
+                            alignment: Alignment
+                                .center, // Align however you like (i.e .centerRight, centerLeft)
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.camera_alt),
+                                Text(" Camera"),
+                              ],
+                            ),
+                          ),
+                        )),
+                    Text(" "),
+                    ElevatedButton(
+                        onPressed: () {
+                          // _showMyDialog("dddd", context);
+                          _getFromGallery("sebelum");
+                        },
+                        child: Center(
+                          child: Align(
+                            alignment: Alignment
+                                .center, // Align however you like (i.e .centerRight, centerLeft)
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.image),
+                                Text(" Gallery"),
+                              ],
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
                 br(null),
                 _imagesesudah == null
                     ? Text("belum ada gambar setelah")
                     : Image.file(_imagesesudah),
                 br(null),
                 Text("Foto sesudah "),
-                ElevatedButton(
-                    onPressed: () {
-                      // _showMyDialog("dddd", context);
-                      getImageSesudah();
-                    },
-                    child: Center(
-                      child: Align(
-                        alignment: Alignment
-                            .center, // Align however you like (i.e .centerRight, centerLeft)
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.camera_alt),
-                            Text(" Foto sesudah"),
-                          ],
-                        ),
-                      ),
-                    )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          // _showMyDialog("dddd", context);
+                          getImageCamera("sesudah");
+                        },
+                        child: Center(
+                          child: Align(
+                            alignment: Alignment
+                                .center, // Align however you like (i.e .centerRight, centerLeft)
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.camera_alt),
+                                Text(" Camera"),
+                              ],
+                            ),
+                          ),
+                        )),
+                    Text(" "),
+                    ElevatedButton(
+                        onPressed: () {
+                          // _showMyDialog("dddd", context);
+                          _getFromGallery("sesudah");
+                        },
+                        child: Center(
+                          child: Align(
+                            alignment: Alignment
+                                .center, // Align however you like (i.e .centerRight, centerLeft)
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.image),
+                                Text(" Gallery"),
+                              ],
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
                 Button_(save, " Simpan", Icons.cloud_done)
               ],
             ),

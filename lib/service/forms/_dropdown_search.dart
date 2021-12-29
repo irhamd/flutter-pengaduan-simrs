@@ -1,19 +1,16 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/cupertino.dart';
 
-// ignore: unused_element
-_dropdownSearch() {
-  return DropdownSearch<String>(
-    mode: Mode.BOTTOM_SHEET,
-    items: [
-      "Brazil",
-      "Italia",
-      "Tunisia",
-      'Canada',
-      'Zraoua',
-      'France',
-      'Belgique'
+DropdownSearch_(String label, item) {
+  return (Column(
+    children: [
+      SizedBox(height: 10),
+      DropdownSearch<String>(
+        mode: Mode.BOTTOM_SHEET,
+        items: item,
+        onChanged: print,
+        showSearchBox: true,
+      )
     ],
-    onChanged: print,
-    showSearchBox: true,
-  );
+  ));
 }

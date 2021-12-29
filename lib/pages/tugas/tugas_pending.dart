@@ -1,11 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
+import 'package:notification/pages/home/dashboard.dart';
 import 'package:notification/service/_warna.dart';
 import 'package:notification/service/api/_api.dart';
+import 'package:notification/service/forms/_Button.dart';
 import 'package:notification/service/globalVar.dart';
 import "package:timeago/timeago.dart" as timeago;
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class TugasPending extends StatefulWidget {
   const TugasPending({key}) : super(key: key);
@@ -29,6 +34,31 @@ class _TugasPendingState extends State<TugasPending> {
   //   });
   //   return json.decode(result.body);
   // }
+
+  final dash = Dashboard();
+  TextEditingController _dateController = TextEditingController();
+  DateTime selectedDate = DateTime.now();
+
+  Future<List<dynamic>> inifuture;
+
+  String _setTime, _tanggal, _setDate;
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        initialDatePickerMode: DatePickerMode.day,
+        firstDate: DateTime(2021),
+        lastDate: DateTime(2101));
+    if (picked != null) {
+      // var tanggal = picked.toString();
+      // print(tanggal.substring(0, 10));
+      setState(() {
+        selectedDate = picked;
+        _tanggal = picked.toString().substring(0, 10);
+        _dateController.text = DateFormat.yMMMMd().format(selectedDate);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +101,46 @@ class _TugasPendingState extends State<TugasPending> {
       ),
       body: Column(
         children: <Widget>[
+          InkWell(
+            onTap: () {
+              _selectDate(context);
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 12,
+              // margin: EdgeInsets.only(top: 30),
+              alignment: Alignment.center,
+              // decoration: BoxDecoration(color: Colors.grey[200]),
+              child: TextFormField(
+                  // style: TextStyle(fontSize: 40),
+                  enabled: false,
+                  keyboardType: TextInputType.text,
+                  controller: _dateController,
+                  onSaved: (String val) {
+                    _setDate = val;
+                  },
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.date_range),
+                    labelText: "Tanggal",
+                    filled: true,
+                    fillColor: Colors.blue[50],
+                  )
+                  // decoration: InputDecoration(
+                  //     disabledBorder:
+                  //         UnderlineInputBorder(borderSide: BorderSide.none),
+                  //     contentPadding: EdgeInsets.only(top: 0.0)),
+                  ),
+            ),
+          ),
+          Button_(() {
+            EasyLoading.showError("cekk");
+            FutureBuilder<List<dynamic>>(
+                future: Api_.getFuture(
+                    "pengaduan-getKeluhanPasien-by-petugas?status=0&tanggal=" +
+                        selectedDate.toString().substring(0, 10)),
+                // ignore: missing_return
+                builder: (context, snapshot) {});
+          }, " Refresh", Icons.refresh),
           Expanded(
             child: Container(
               // padding: EdgeInsets.all(10),
@@ -104,13 +174,13 @@ class _TugasPendingState extends State<TugasPending> {
                                         icon: Icons.control_point_duplicate,
                                         label: 'Accept',
                                       ),
-                                      SlidableAction(
-                                        onPressed: null,
-                                        backgroundColor: Colors.red,
-                                        foregroundColor: Colors.white,
-                                        icon: Icons.low_priority,
-                                        label: 'Reject',
-                                      ),
+                                      // SlidableAction(
+                                      //   onPressed: null,
+                                      //   backgroundColor: Colors.red,
+                                      //   foregroundColor: Colors.white,
+                                      //   icon: Icons.low_priority,
+                                      //   label: 'Reject',
+                                      // ),
                                     ],
                                   ),
                                   child: ListTile(

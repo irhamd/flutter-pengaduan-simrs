@@ -28,7 +28,7 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
   }
 
-  getData() {
+  void getData() {
     Api.Get_("pengaduan-getCountNumber").then((res) {
       print(res.toString());
       setState(() {
