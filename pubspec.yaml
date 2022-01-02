@@ -52,6 +52,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   video_player: ^2.2.10
   syncfusion_flutter_datepicker: ^19.4.38
+  syncfusion_flutter_charts: ^19.4.40
+  syncfusion_flutter_signaturepad: ^19.4.40
  
 
 dev_dependencies:

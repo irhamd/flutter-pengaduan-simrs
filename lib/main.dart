@@ -6,12 +6,16 @@ import 'package:notification/pages/Test/Rest/rest_post.dart';
 import 'package:notification/pages/Test/Rest/test_crud.dart';
 import 'package:notification/pages/Test/TestUploadImage.dart';
 import 'package:notification/pages/Test/camera_alt.dart';
+import 'package:notification/pages/Test/chart/test_chart.dart';
+import 'package:notification/pages/Test/chart/test_signature.dart';
 import 'package:notification/pages/Test/halaman_horizontal.dart';
 import 'package:notification/pages/Test/testGallery.dart';
 import 'package:notification/pages/Test/test_storage.dart';
 import 'package:notification/pages/auth/login.dart';
 import 'package:notification/pages/home/dashboard.dart';
 import 'package:notification/pages/home/home_drawer.dart';
+import 'package:notification/pages/pegawai/data_petugas.dart';
+import 'package:notification/pages/tugas/detail.dart';
 import 'package:notification/pages/tugas/followup_tugas.dart';
 import 'package:notification/pages/tugas/input_tugas.dart';
 import 'package:notification/pages/tugas/tugas_pending.dart';
@@ -29,8 +33,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: Login(),
-      home: CRUD(),
+      home: Login(),
+      // home: CRUD(),
+      // home: TestChart(),
+      // home: TestSignature(),
       builder: EasyLoading.init(),
       routes: {
         '/home': (cx) => HomeDrawer(),
@@ -50,6 +56,8 @@ class MyApp extends StatelessWidget {
         '/input_tugas': (cx) => InputTugas(),
         '/follow_up': (cx) => FollowUpTugas(),
         '/test_image_gallery': (cx) => TestGalery(),
+        '/data_petugas': (cx) => DataPetugas(),
+        '/detail_tugas': (cx) => DetailTugas(),
       },
     );
   }

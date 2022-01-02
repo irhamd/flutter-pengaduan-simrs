@@ -39,6 +39,46 @@ class FollowUpTugasState extends State<FollowUpTugas> {
 
   final imagePicker = ImagePicker();
 
+  _getFromGallery(String jj) async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      switch (jj) {
+        case "sebelum":
+          setState(() {
+            _imagesebelum = File(pickedFile.path);
+          });
+          break;
+        case "sesudah":
+          setState(() {
+            _imagesesudah = File(pickedFile.path);
+          });
+          break;
+      }
+    }
+  }
+
+  Future getImageCamera(jj) async {
+    final gambar = await imagePicker.getImage(source: ImageSource.camera);
+    if (gambar != null) {
+      switch (jj) {
+        case "sebelum":
+          setState(() {
+            _imagesebelum = File(gambar.path);
+          });
+          break;
+        case "sesudah":
+          setState(() {
+            _imagesesudah = File(gambar.path);
+          });
+          break;
+      }
+    }
+  }
+
   Future getImageSebelum() async {
     final gambar = await imagePicker.getImage(source: ImageSource.camera);
 
@@ -97,54 +137,102 @@ class FollowUpTugasState extends State<FollowUpTugas> {
                   },
                 ),
                 br(null),
-                Text("Foto sebelum "),
                 br(null),
                 _imagesebelum == null
                     ? Text("belum ada gambar sebelum")
                     : Image.file(_imagesebelum),
                 br(null),
-                ElevatedButton(
-                    onPressed: () {
-                      // _showMyDialog("dddd", context);
-                      getImageSebelum();
-                    },
-                    child: Center(
-                      child: Align(
-                        alignment: Alignment
-                            .center, // Align however you like (i.e .centerRight, centerLeft)
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.camera_alt),
-                            Text(" Foto sebelum"),
-                          ],
-                        ),
-                      ),
-                    )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          // _showMyDialog("dddd", context);
+                          getImageCamera("sebelum");
+                        },
+                        child: Center(
+                          child: Align(
+                            alignment: Alignment
+                                .center, // Align however you like (i.e .centerRight, centerLeft)
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.camera_alt),
+                                Text(" Camera"),
+                              ],
+                            ),
+                          ),
+                        )),
+                    Text(" "),
+                    ElevatedButton(
+                        onPressed: () {
+                          // _showMyDialog("dddd", context);
+                          // _getFromGallery();
+                          _getFromGallery("sebelum");
+                        },
+                        child: Center(
+                          child: Align(
+                            alignment: Alignment
+                                .center, // Align however you like (i.e .centerRight, centerLeft)
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.image),
+                                Text(" Gallery"),
+                              ],
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
                 br(null),
                 _imagesesudah == null
                     ? Text("belum ada gambar setelah")
                     : Image.file(_imagesesudah),
                 br(null),
                 Text("Foto sesudah "),
-                ElevatedButton(
-                    onPressed: () {
-                      // _showMyDialog("dddd", context);
-                      getImageSesudah();
-                    },
-                    child: Center(
-                      child: Align(
-                        alignment: Alignment
-                            .center, // Align however you like (i.e .centerRight, centerLeft)
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.camera_alt),
-                            Text(" Foto sesudah"),
-                          ],
-                        ),
-                      ),
-                    )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          // _showMyDialog("dddd", context);
+                          getImageCamera("sesudah");
+                        },
+                        child: Center(
+                          child: Align(
+                            alignment: Alignment
+                                .center, // Align however you like (i.e .centerRight, centerLeft)
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.camera_alt),
+                                Text(" Camera"),
+                              ],
+                            ),
+                          ),
+                        )),
+                    Text(" "),
+                    ElevatedButton(
+                        onPressed: () {
+                          // _showMyDialog("dddd", context);
+                          _getFromGallery("sesudah");
+                        },
+                        child: Center(
+                          child: Align(
+                            alignment: Alignment
+                                .center, // Align however you like (i.e .centerRight, centerLeft)
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.image),
+                                Text(" Gallery"),
+                              ],
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
                 Button_(simpanFollowUp, " Simpan", Icons.cloud_done)
               ],
             ),

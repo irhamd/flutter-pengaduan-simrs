@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import "package:http/http.dart" as http;
 import 'package:intl/intl.dart';
+import 'package:notification/service/api/_api.dart';
+import 'package:notification/service/globalVar.dart';
 
 class CRUD extends StatefulWidget {
   const CRUD({key}) : super(key: key);
@@ -39,12 +41,12 @@ class _CRUDState extends State<CRUD> {
   Future<String> getData() async {
     EasyLoading.show(status: "Mohon Tunggu");
     var datas = await http.get(
-        Uri.parse(
-            "http://10.10.102.3:3367/api/pengaduan-getKeluhanPasien-by-petugas?status=0&tanggal=" +
-                selectedDate.toString().substring(0, 10)),
+        Uri.parse(baseUrl +
+            "pengaduan-getKeluhanPasien-by-petugas?status=0&tanggal=" +
+            selectedDate.toString().substring(0, 10)),
         headers: {
           "Accept": "application/json",
-          "Authorization": "Bearer 478|sdgZKyWODjhYxG0NLp2jYDJZFbcO0PV8z9RydH7W"
+          "Authorization": "Bearer " + Var_tokenx
         });
     setState(() {
       data = jsonDecode(datas.body);

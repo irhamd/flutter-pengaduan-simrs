@@ -7,10 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:notification/pages/home/dashboard.dart';
 import 'package:notification/service/_warna.dart';
 import 'package:notification/service/api/_api.dart';
-import 'package:notification/service/forms/_Button.dart';
 import 'package:notification/service/globalVar.dart';
 import "package:timeago/timeago.dart" as timeago;
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import "package:http/http.dart" as http;
 
 class TugasPending extends StatefulWidget {
   const TugasPending({key}) : super(key: key);
@@ -20,22 +19,15 @@ class TugasPending extends StatefulWidget {
 }
 
 class _TugasPendingState extends State<TugasPending> {
-  // Future<List<dynamic>> _fecthDataUsers() async {
-  //   // var result = await http.get(PostData.uri);
-  //   // return json.decode(result.body)['data'];
-
-  //   // return Api_.get("pengaduan-getKeluhanPasien");
-
-  //   Uri uri =
-  //       Uri.parse("http://192.168.137.1:3367/api/pengaduan-getKeluhanPasien");
-  //   var result = await http.get(uri, headers: {
-  //     'Authorization': "Bearer 234|nMVvKasZ3iOBgt4DclDtcfnIWyRB9JC6QNhXNw5X",
-  //     "Accept": "application/json"
-  //   });
-  //   return json.decode(result.body);
-  // }
+  @override
+  void initState() {
+    super.initState();
+    this.getData();
+  }
 
   final dash = Dashboard();
+  List data = List(0);
+
   TextEditingController _dateController = TextEditingController();
   DateTime selectedDate = DateTime.now();
 
@@ -50,14 +42,27 @@ class _TugasPendingState extends State<TugasPending> {
         firstDate: DateTime(2021),
         lastDate: DateTime(2101));
     if (picked != null) {
-      // var tanggal = picked.toString();
-      // print(tanggal.substring(0, 10));
       setState(() {
         selectedDate = picked;
+        this.getData();
         _tanggal = picked.toString().substring(0, 10);
-        _dateController.text = DateFormat.yMMMMd().format(selectedDate);
+        _dateController.text = DateFormat("dd-MMMM-yyyy").format(selectedDate);
       });
     }
+  }
+
+  Future<String> getData() async {
+    EasyLoading.show(status: "Mohon Tunggu");
+    var datas = await http.get(
+        Uri.parse(baseUrl +
+            "pengaduan-getKeluhanPasien-by-petugas?status=0&tanggal=" +
+            selectedDate.toString().substring(0, 10)),
+        headers: HeadersS);
+    setState(() {
+      data = jsonDecode(datas.body);
+      EasyLoading.dismiss();
+    });
+    return "Success!";
   }
 
   @override
@@ -72,11 +77,8 @@ class _TugasPendingState extends State<TugasPending> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) => {
-          // EasyLoading.showInfo(value.toString()),
-          // if (value == 0) Navigator.pushNamed(context, "tugas_pending"),
-          if (value == 1) Navigator.pushNamed(context, "/tugas_selesai")
-        },
+        onTap: (value) =>
+            {if (value == 1) Navigator.pushNamed(context, "/tugas_selesai")},
         items: [
           BottomNavigationBarItem(
             icon: Icon(
@@ -108,11 +110,8 @@ class _TugasPendingState extends State<TugasPending> {
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 12,
-              // margin: EdgeInsets.only(top: 30),
               alignment: Alignment.center,
-              // decoration: BoxDecoration(color: Colors.grey[200]),
               child: TextFormField(
-                  // style: TextStyle(fontSize: 40),
                   enabled: false,
                   keyboardType: TextInputType.text,
                   controller: _dateController,
@@ -124,111 +123,77 @@ class _TugasPendingState extends State<TugasPending> {
                     labelText: "Tanggal",
                     filled: true,
                     fillColor: Colors.blue[50],
-                  )
-                  // decoration: InputDecoration(
-                  //     disabledBorder:
-                  //         UnderlineInputBorder(borderSide: BorderSide.none),
-                  //     contentPadding: EdgeInsets.only(top: 0.0)),
-                  ),
+                  )),
             ),
           ),
-          Button_(() {
-            EasyLoading.showError("cekk");
-            FutureBuilder<List<dynamic>>(
-                future: Api_.getFuture(
-                    "pengaduan-getKeluhanPasien-by-petugas?status=0&tanggal=" +
-                        selectedDate.toString().substring(0, 10)),
-                // ignore: missing_return
-                builder: (context, snapshot) {});
-          }, " Refresh", Icons.refresh),
           Expanded(
             child: Container(
-              // padding: EdgeInsets.all(10),
+              padding: EdgeInsets.only(top: 10),
               // ignore: missing_required_param
               decoration: gradientColor(),
-              child: FutureBuilder<List<dynamic>>(
-                  future: Api_.getFuture(
-                      "pengaduan-getKeluhanPasien-by-petugas?status=0"),
-                  // ignore: missing_return
-                  builder: (BuildContext context, AsyncSnapshot item) {
-                    if (item.hasData) {
-                      return ListView.builder(
-                          // padding: EdgeInsets.all(10),
-                          itemCount: item.data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                  // color: Colors.blue[50],
-                                  border: Border.all(
-                                      width: 0.3, color: Colors.blue[300])),
-                              child: Slidable(
-                                  key: const ValueKey(0),
-                                  startActionPane: ActionPane(
-                                    // dismissible: DismissiblePane(onDismissed: () {}),
-                                    motion: const ScrollMotion(),
-                                    children: const [
-                                      SlidableAction(
-                                        onPressed: acceptTugas,
-                                        backgroundColor: Colors.green,
-                                        foregroundColor: Colors.white,
-                                        icon: Icons.control_point_duplicate,
-                                        label: 'Accept',
-                                      ),
-                                      // SlidableAction(
-                                      //   onPressed: null,
-                                      //   backgroundColor: Colors.red,
-                                      //   foregroundColor: Colors.white,
-                                      //   icon: Icons.low_priority,
-                                      //   label: 'Reject',
-                                      // ),
-                                    ],
+              child: Container(
+                  height: MediaQuery.of(context).size.height / 1.6,
+                  child: ListView.builder(
+                      // padding: EdgeInsets.all(10),
+                      itemCount: data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              // color: Colors.blue[50],
+                              border: Border.all(
+                                  width: 0.3, color: Colors.blue[300])),
+                          child: Slidable(
+                              key: const ValueKey(0),
+                              startActionPane: ActionPane(
+                                // dismissible: DismissiblePane(onDismissed: () {}),
+                                motion: const ScrollMotion(),
+                                children: const [
+                                  SlidableAction(
+                                    onPressed: acceptTugas,
+                                    backgroundColor: Colors.green,
+                                    foregroundColor: Colors.white,
+                                    icon: Icons.control_point_duplicate,
+                                    label: 'Accept',
                                   ),
-                                  child: ListTile(
-                                    leading: CircleAvatar(
-                                      radius: 30.0,
-                                      // backgroundColor: Colors.brown.shade800,
-                                      backgroundImage:
-                                          AssetImage("assets/power.png"),
+                                ],
+                              ),
+                              child: ListTile(
+                                leading: CircleAvatar(
+                                  radius: 30.0,
+                                  // backgroundColor: Colors.brown.shade800,
+                                  backgroundImage:
+                                      AssetImage("assets/power.png"),
+                                ),
+                                onTap: () {
+                                  Var_keluhan = jsonEncode(data[index]);
+                                },
+                                onLongPress: () {
+                                  Var_keluhan = jsonEncode(data[index]);
+                                  Navigator.pushNamed(context, "/follow_up");
+                                },
+                                title: Text(data[index]['unitkerja']),
+                                subtitle: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width -
+                                          220,
+                                      child: Text(
+                                        data[index]['isipengaduan'],
+                                      ),
                                     ),
-                                    onTap: () {
-                                      Var_keluhan =
-                                          jsonEncode(item.data[index]);
-                                    },
-                                    onLongPress: () {
-                                      Var_keluhan =
-                                          jsonEncode(item.data[index]);
-                                      Navigator.pushNamed(
-                                          context, "/follow_up");
-                                    },
-                                    title: Text(item.data[index]['unitkerja']),
-                                    subtitle: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width -
-                                              220,
-                                          child: Text(
-                                            item.data[index]['isipengaduan'],
-                                          ),
-                                        ),
-                                        Text(
-                                          timeago.format(DateTime.parse(
-                                              item.data[index]['created_at'])),
-                                          style: TextStyle(
-                                              fontStyle: FontStyle.italic),
-                                        ),
-                                      ],
+                                    Text(
+                                      timeago.format(DateTime.parse(
+                                          data[index]['created_at'])),
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic),
                                     ),
-                                  )),
-                            );
-                          });
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  }),
+                                  ],
+                                ),
+                              )),
+                        );
+                      })),
             ),
           ),
           Container(

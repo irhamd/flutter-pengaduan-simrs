@@ -13,7 +13,8 @@ String Var_ruangan_pengaduan = "";
 // ignore: non_constant_identifier_names
 String Var_tokenx = "";
 String Var_idpengaduan = "";
-String Var_ver = "ver 1.4";
+String Var_ver = "ver 1.5";
 Object Var_object_pengaduan = {};
 
 Map Var_data_login;
+String Var_id_detail;

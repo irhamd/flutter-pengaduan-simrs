@@ -176,9 +176,9 @@ class _DashboardState extends State<Dashboard> {
                         BigButton("/tugas_selesai", "assets/note.png",
                             'Riwayat', selesai.toString(), context),
                         BigButton("/input_tugas", "assets/calendar.png",
-                            "Input", '-', context),
-                        BigButton("/home", "assets/settings.png", "Setting",
-                            '-', context),
+                            "Input", '', context),
+                        BigButton("/home", "assets/settings.png", "Setting", '',
+                            context),
                       ],
                     ),
                   )

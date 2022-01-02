@@ -46,19 +46,11 @@ IniDrawer(BuildContext context) {
           ),
           title: Row(
             children: [
-              Text("Daftar Tugas  "),
-              CircleAvatar(
-                backgroundColor: Colors.red,
-                child: Text(
-                  "",
-                  style: TextStyle(fontSize: 10),
-                ),
-                radius: 10,
-              ),
+              Text("Data Petugas  "),
             ],
           ),
           onTap: () {
-            Navigator.pushNamed(context, "/rest_get");
+            Navigator.pushNamed(context, "/data_petugas");
           },
         ),
         Divider(),

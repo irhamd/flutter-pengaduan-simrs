@@ -25,13 +25,14 @@ class InputTugas extends StatefulWidget {
 class InputTugasState extends State<InputTugas> {
   File _imagesebelum;
   File _imagesesudah;
-  TextEditingController permasalahan,
-      penyabab,
-      solusi,
-      nama,
-      keterangan,
-      nohp,
-      ruangan = TextEditingController();
+  TextEditingController permasalahan = TextEditingController();
+  TextEditingController penyabab = TextEditingController();
+  TextEditingController solusi = TextEditingController();
+  TextEditingController nama = TextEditingController();
+  TextEditingController keterangan = TextEditingController();
+  TextEditingController nohp = TextEditingController();
+  TextEditingController ruangan = TextEditingController();
+
   // penyabab,
   // solusi,
   // nama,
@@ -40,28 +41,6 @@ class InputTugasState extends State<InputTugas> {
   // nohp
 
   List dataRuangan = [];
-
-  @override
-  void initState() {
-    super.initState();
-    getRuangan();
-    // print(Var_keluhan);
-
-    // Object obj = jsonDecode(Var_keluhan);
-  }
-
-  getRuangan() async {
-    // dataRuangan = Api_.getData("pengaduan-getRuangan");
-    Uri uri = Uri.parse(baseUrl + "pengaduan-getRuangan");
-    var result = await http.get(uri, headers: HeadersS);
-
-    setState(() {
-      dataRuangan = json.decode(result.body);
-    });
-    // dataRuangan = hasil;
-    // hasil);
-    // setState(() {});
-  }
 
   final imagePicker = ImagePicker();
 
@@ -146,7 +125,6 @@ class InputTugasState extends State<InputTugas> {
                   "Ruangan",
                   ruangan,
                 ),
-                DropdownSearch_("Ruangan", dataRuangan),
                 Inputan("Penyebab", penyabab),
                 Inputan("Solusi", solusi),
                 Inputan("Keterangan", keterangan),
@@ -192,6 +170,7 @@ class InputTugasState extends State<InputTugas> {
                     ElevatedButton(
                         onPressed: () {
                           // _showMyDialog("dddd", context);
+                          // _getFromGallery();
                           _getFromGallery("sebelum");
                         },
                         child: Center(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:notification/service/_warna.dart';
 import 'package:notification/service/api/_api.dart';
+import 'package:notification/service/globalVar.dart';
 import "package:timeago/timeago.dart" as timeago;
 
 class TugasSelesai extends StatefulWidget {
@@ -66,19 +67,18 @@ class _TugasSelesaiState extends State<TugasSelesai> {
                                         onPressed: null,
                                         backgroundColor: Colors.green,
                                         foregroundColor: Colors.white,
-                                        icon: Icons.control_point_duplicate,
-                                        label: 'Accept',
-                                      ),
-                                      SlidableAction(
-                                        onPressed: null,
-                                        backgroundColor: Colors.red,
-                                        foregroundColor: Colors.white,
-                                        icon: Icons.low_priority,
-                                        label: 'Reject',
+                                        icon: Icons.view_carousel_sharp,
+                                        label: 'Detail',
                                       ),
                                     ],
                                   ),
                                   child: ListTile(
+                                    onLongPress: () {
+                                      Var_id_detail =
+                                          item.data[index]["id"].toString();
+                                      Navigator.pushNamed(
+                                          context, "/detail_tugas");
+                                    },
                                     leading: CircleAvatar(
                                       radius: 30.0,
                                       // backgroundColor: Colors.brown.shade800,
