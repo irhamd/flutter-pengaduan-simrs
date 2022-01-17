@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:notification/service/_input.dart';
 import 'package:notification/service/_warna.dart';
 import 'package:notification/service/api/_api.dart';
 import 'package:notification/service/globalVar.dart';
@@ -15,6 +16,10 @@ class TugasSelesai extends StatefulWidget {
 }
 
 class _TugasSelesaiState extends State<TugasSelesai> {
+  @override
+  void initState() {
+    super.initState();
+  }
   // Future<List<dynamic>> _fecthDataUsers() async {
   //   // var result = await http.get(PostData.uri);
   //   // return json.decode(result.body)['data'];
@@ -41,10 +46,12 @@ class _TugasSelesaiState extends State<TugasSelesai> {
           Expanded(
             child: Container(
               // ignore: missing_required_param
+              padding: EdgeInsets.only(top: 10),
               decoration: gradientColor(),
               child: FutureBuilder<List<dynamic>>(
                   future: Api_.getFuture(
-                      "pengaduan-getKeluhanPasien-by-petugas?status=1"),
+                      "pengaduan-getKeluhanPasien-by-petugas?status=1&id_pegawai=" +
+                          Var_id_pegawai),
                   // ignore: missing_return
                   builder: (BuildContext context, AsyncSnapshot item) {
                     if (item.hasData) {

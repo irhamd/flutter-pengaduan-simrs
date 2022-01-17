@@ -18,3 +18,4 @@ Object Var_object_pengaduan = {};
 
 Map Var_data_login;
 String Var_id_detail;
+String Var_id_pegawai = "11";

@@ -18,7 +18,7 @@ IniDrawer(BuildContext context) {
             child: CircleAvatar(
               radius: 60.0,
               backgroundImage: NetworkImage(
-                  baseUrlRoute + "/Users/" + Var_data_login["user"]["foto"]),
+                  baseUrlRoute + "/Users/" + Var_data_login["pegawai"]["foto"]),
               // backgroundColor: Colors.brown.shade800,
             ),
           ),

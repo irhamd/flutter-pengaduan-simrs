@@ -223,6 +223,12 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
+                Spacer(),
+                Text(
+                  " SILAHKAN UPDATE DI SINI ",
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                ),
               ],
             ),
           ),

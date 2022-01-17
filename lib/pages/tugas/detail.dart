@@ -17,7 +17,7 @@ class DetailTugas extends StatefulWidget {
 }
 
 class _DetailTugasState extends State<DetailTugas> {
-  Map detail;
+  Map detail = Map();
   String routes;
   @override
   void initState() {
@@ -26,15 +26,21 @@ class _DetailTugasState extends State<DetailTugas> {
   }
 
   _getDetailData() async {
-    EasyLoading.show(status: "Mohon Tunggu");
-    var datas = await http.get(
-        Uri.parse(baseUrl + "pengaduan-detailTugas?id=$Var_id_detail"),
-        headers: HeadersS);
-    setState(() {
-      detail = jsonDecode(datas.body);
-      print(detail);
+    try {
+      EasyLoading.show(status: "Mohon Tunggu");
+      var datas = await http.get(
+          Uri.parse(baseUrl + "pengaduan-detailTugas?id=$Var_id_detail"),
+          headers: HeadersS);
+      setState(() {
+        detail = jsonDecode(datas.body);
+        print(detail);
+        EasyLoading.dismiss();
+      });
+    } catch (e) {
+      print(e);
       EasyLoading.dismiss();
-    });
+    }
+
     return "Success!";
   }
 
@@ -65,19 +71,14 @@ class _DetailTugasState extends State<DetailTugas> {
           title,
           textAlign: TextAlign.left,
         ),
-        // Image.network(
-        //   baseUrlRoute + "/Pengaduan/" + value,
-        //   height: 180,
-        // ),
         br(10),
         Image.network(
-          "https://cdn.pixabay.com/photo/2013/10/27/17/14/snowfall-201496_960_720.jpg",
+          baseUrlRoute + "/Pengaduan/" + detail[value],
           errorBuilder:
               (BuildContext context, Object exception, StackTrace stackTrace) {
             return CircularProgressIndicator();
           },
         ),
-
         Divider(color: Colors.grey),
       ],
     );
@@ -122,6 +123,7 @@ class _DetailTugasState extends State<DetailTugas> {
                   _labelDate("Tanggal Selesai", 'waktu_selesai'),
                   _label("Ruangan", 'unitkerja'),
                   _label("Nama", 'nama'),
+                  _label("Petugas Pelaksana", 'namapegawai'),
                   _label("Isi Pengaduan", 'isipengaduan'),
                   _label("Penyebab", 'penyebab'),
                   _labelFoto("Foto Sebelum", 'foto_sebelum'),

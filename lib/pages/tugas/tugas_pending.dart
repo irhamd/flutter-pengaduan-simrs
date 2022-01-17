@@ -55,7 +55,7 @@ class _TugasPendingState extends State<TugasPending> {
     EasyLoading.show(status: "Mohon Tunggu");
     var datas = await http.get(
         Uri.parse(baseUrl +
-            "pengaduan-getKeluhanPasien-by-petugas?status=0&tanggal=" +
+            "pengaduan-getKeluhanPasien-by-petugas?status=0&tanggal1=" +
             selectedDate.toString().substring(0, 10)),
         headers: HeadersS);
     setState(() {
@@ -103,97 +103,97 @@ class _TugasPendingState extends State<TugasPending> {
       ),
       body: Column(
         children: <Widget>[
-          InkWell(
-            onTap: () {
-              _selectDate(context);
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 12,
-              alignment: Alignment.center,
-              child: TextFormField(
-                  enabled: false,
-                  keyboardType: TextInputType.text,
-                  controller: _dateController,
-                  onSaved: (String val) {
-                    _setDate = val;
-                  },
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.date_range),
-                    labelText: "Tanggal",
-                    filled: true,
-                    fillColor: Colors.blue[50],
-                  )),
-            ),
-          ),
+          // InkWell(
+          //   onTap: () {
+          //     _selectDate(context);
+          //   },
+          //   child: Container(
+          //     width: MediaQuery.of(context).size.width,
+          //     height: MediaQuery.of(context).size.height / 12,
+          //     alignment: Alignment.center,
+          //     child: TextFormField(
+          //         enabled: false,
+          //         keyboardType: TextInputType.text,
+          //         controller: _dateController,
+          //         onSaved: (String val) {
+          //           _setDate = val;
+          //         },
+          //         decoration: InputDecoration(
+          //           prefixIcon: Icon(Icons.date_range),
+          //           labelText: "Tanggal",
+          //           filled: true,
+          //           fillColor: Colors.blue[50],
+          //         )),
+          //   ),
+          // ),
           Expanded(
             child: Container(
               padding: EdgeInsets.only(top: 10),
               // ignore: missing_required_param
               decoration: gradientColor(),
               child: Container(
-                  height: MediaQuery.of(context).size.height / 1.6,
-                  child: ListView.builder(
-                      // padding: EdgeInsets.all(10),
-                      itemCount: data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              // color: Colors.blue[50],
-                              border: Border.all(
-                                  width: 0.3, color: Colors.blue[300])),
-                          child: Slidable(
-                              key: const ValueKey(0),
-                              startActionPane: ActionPane(
-                                // dismissible: DismissiblePane(onDismissed: () {}),
-                                motion: const ScrollMotion(),
-                                children: const [
-                                  SlidableAction(
-                                    onPressed: acceptTugas,
-                                    backgroundColor: Colors.green,
-                                    foregroundColor: Colors.white,
-                                    icon: Icons.control_point_duplicate,
-                                    label: 'Accept',
+                height: MediaQuery.of(context).size.height / 1.6,
+                child: ListView.builder(
+                    // padding: EdgeInsets.all(10),
+                    itemCount: data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                            // color: Colors.blue[50],
+                            border: Border.all(
+                                width: 0.3, color: Colors.blue[300])),
+                        child: Slidable(
+                            key: const ValueKey(0),
+                            startActionPane: ActionPane(
+                              // dismissible: DismissiblePane(onDismissed: () {}),
+                              motion: const ScrollMotion(),
+                              children: const [
+                                SlidableAction(
+                                  onPressed: acceptTugas,
+                                  backgroundColor: Colors.green,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.control_point_duplicate,
+                                  label: 'Accept',
+                                ),
+                              ],
+                            ),
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 30.0,
+                                // backgroundColor: Colors.brown.shade800,
+                                backgroundImage: AssetImage("assets/power.png"),
+                              ),
+                              onTap: () {
+                                Var_keluhan = jsonEncode(data[index]);
+                              },
+                              onLongPress: () {
+                                Var_keluhan = jsonEncode(data[index]);
+                                Navigator.pushNamed(context, "/follow_up");
+                              },
+                              title: Text(data[index]['unitkerja']),
+                              subtitle: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width - 220,
+                                    child: Text(
+                                      data[index]['isipengaduan'],
+                                    ),
+                                  ),
+                                  Text(
+                                    timeago.format(DateTime.parse(
+                                        data[index]['created_at'])),
+                                    style:
+                                        TextStyle(fontStyle: FontStyle.italic),
                                   ),
                                 ],
                               ),
-                              child: ListTile(
-                                leading: CircleAvatar(
-                                  radius: 30.0,
-                                  // backgroundColor: Colors.brown.shade800,
-                                  backgroundImage:
-                                      AssetImage("assets/power.png"),
-                                ),
-                                onTap: () {
-                                  Var_keluhan = jsonEncode(data[index]);
-                                },
-                                onLongPress: () {
-                                  Var_keluhan = jsonEncode(data[index]);
-                                  Navigator.pushNamed(context, "/follow_up");
-                                },
-                                title: Text(data[index]['unitkerja']),
-                                subtitle: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width -
-                                          220,
-                                      child: Text(
-                                        data[index]['isipengaduan'],
-                                      ),
-                                    ),
-                                    Text(
-                                      timeago.format(DateTime.parse(
-                                          data[index]['created_at'])),
-                                      style: TextStyle(
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                  ],
-                                ),
-                              )),
-                        );
-                      })),
+                            )),
+                      );
+                    }),
+              ),
             ),
           ),
           Container(

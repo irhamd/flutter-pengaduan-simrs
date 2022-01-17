@@ -6,9 +6,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import "package:http/http.dart" as http;
 import 'package:notification/service/globalVar.dart';
 
-String baseUrlRoute = "http://192.168.88.180:3367";
+// String baseUrlRoute = "http://192.168.88.180:3367";
 
-// String baseUrlRoute = "http://10.10.102.3:3367";
+String baseUrlRoute = "http://10.10.102.3:3367";
 
 // String baseUrlRoute = "http://192.168.117.180:3367";
 // String baseUrlRoute = "http://172.16.0.77:3367";
