@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:notification/pages/home/dashboard.dart';
+import 'package:notification/service/_input.dart';
 import 'package:notification/service/_warna.dart';
 import 'package:notification/service/api/_api.dart';
 import 'package:notification/service/globalVar.dart';
@@ -79,24 +80,8 @@ class _TugasPendingState extends State<TugasPending> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) =>
             {if (value == 1) Navigator.pushNamed(context, "/tugas_selesai")},
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.rotate_90_degrees_ccw,
-              color: Color(0xff6bceff),
-            ),
-            title: Text(
-              'Pending',
-              style: TextStyle(
-                color: Color(0xff6bceff),
-              ),
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.playlist_add_check),
-            title: Text('Riwayat Tugas'),
-          ),
-        ],
+      items: ButtonNavigasi(),
+
       ),
       appBar: AppBar(
         title: Text("TUGAS UNTUK ANDA"),

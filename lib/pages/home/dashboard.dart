@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:notification/pages/home/iniDrawer.dart';
+import 'package:notification/service/_input.dart';
 import 'package:notification/service/_warna.dart';
 import 'package:notification/service/api/_api.dart';
 import 'package:notification/service/api/api_post.dart';
@@ -60,24 +61,7 @@ class _DashboardState extends State<Dashboard> {
             // if (value == 0) Navigator.pushNamed(context, "tugas_pending"),
             if (value == 1) Navigator.pushNamed(context, "/tugas_selesai")
           },
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.rotate_90_degrees_ccw,
-                color: Color(0xff6bceff),
-              ),
-              title: Text(
-                'Pending',
-                style: TextStyle(
-                  color: Color(0xff6bceff),
-                ),
-              ),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.playlist_add_check),
-              title: Text('Riwayat Tugas'),
-            ),
-          ],
+           items: ButtonNavigasi()
         ),
         drawer: IniDrawer(context),
         body: Container(

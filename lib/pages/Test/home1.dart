@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notification/service/_input.dart';
 import 'package:notification/service/_warna.dart';
 
 class HomePage extends StatelessWidget {
@@ -90,24 +91,7 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: Color(0xff6bceff),
-            ),
-            title: Text(
-              'Home',
-              style: TextStyle(
-                color: Color(0xff6bceff),
-              ),
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            title: Text('Historique'),
-          ),
-        ],
+           items: ButtonNavigasi(),
       ),
       body: Container(
         decoration: gradientColor(),

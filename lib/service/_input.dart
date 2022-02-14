@@ -45,3 +45,16 @@ Inputan(String label, TextEditingController ctr) {
 br(double height) {
   return (SizedBox(height: height != null ? height : 10));
 }
+
+ButtonNavigasi() {
+  return ([
+    BottomNavigationBarItem(
+        icon: Icon(
+          Icons.rotate_90_degrees_ccw,
+          color: Color(0xff6bceff),
+        ),
+        label: 'Pending'),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.playlist_add_check), label: 'Riwayat Tugas'),
+  ]);
+}
